@@ -43,12 +43,18 @@ class RadialGradient(Widget):
     
     center_color = ColorProperty(defaultvalue='white')
     '''
+    Color of the widget center.
     
+    :attr:`center_color` is an :class:`~kivy.properties.ColorProperty`
+    and defaults to `white`.
     '''
     
     border_color = ColorProperty(defaultvalue='black')
     '''
+    Color of the widget borders.
     
+    :attr:`border_color` is an :class:`~kivy.properties.ColorProperty`
+    and defaults to `black`.
     '''
 
     def __init__(self, **kwargs):
