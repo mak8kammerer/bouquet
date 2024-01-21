@@ -47,18 +47,34 @@ class LinearGradient(AnchorLayout):
     
     top_left_color = ColorProperty(defaultvalue='green')
     '''
+    Color of the top left corner of gradient.
+    
+    :attr:`top_left_color` is an :class:`~kivy.properties.ColorProperty`
+    and defaults to `green`.
     '''
     
     bottom_left_color = ColorProperty(defaultvalue='black')
     '''
+    Color of the top bottom corner of gradient.
+    
+    :attr:`bottom_left_color` is an :class:`~kivy.properties.ColorProperty`
+    and defaults to `black`.
     '''
     
     top_right_color = ColorProperty(defaultvalue='yellow')
     '''
+    Color of the top right corner of gradient.
+    
+    :attr:`top_right_color` is an :class:`~kivy.properties.ColorProperty`
+    and defaults to `yellow`.
     '''
     
     bottom_right_color = ColorProperty(defaultvalue='red')
     '''
+    Color of the bottom right corner of gradient.
+    
+    :attr:`bottom_right_color` is an :class:`~kivy.properties.ColorProperty`
+    and defaults to `red`.
     '''
     
     def __init__(self, **kwargs):
