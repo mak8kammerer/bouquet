@@ -20,7 +20,7 @@ Welcome to the **Bouquet** library! **Bouquet** is collection of awesome widgets
 
 ## Why you do not post project in Kivy Garden?
 
-Bouquet has a slightly different approach. Each flower in the kivy-garden should be a single widget (or a group of widgets) that do one task. In turn, bouquet provides a wide variety of widgets.
+Bouquet has a slightly different approach. Each flower in the kivy-garden should be a single widget (or a group of widgets) that do one task. In turn, bouquet provides a wide variety of widgets, which do a lot of different tasks.
 
 ## Why Bouquet?
 
