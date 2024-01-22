@@ -29,7 +29,7 @@ KV = '''
 FRAGMENT_SHADER = '''
 $HEADER$
 
-// Inspired by https://gist.github.com/tito/4250317
+// Inspired by https://gist.github.com/tito/4250317#file-gpuradialgradient-py
 
 uniform vec4 centerColor;
 uniform vec4 borderColor;
