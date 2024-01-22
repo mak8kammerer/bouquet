@@ -29,6 +29,8 @@ KV = '''
 FRAGMENT_SHADER = '''
 $HEADER$
 
+// Inspired by https://gist.github.com/tito/4250317
+
 uniform vec4 centerColor;
 uniform vec4 borderColor;
 
