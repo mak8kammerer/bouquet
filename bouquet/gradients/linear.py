@@ -1,6 +1,13 @@
 '''
 Linear Gradient
 ===============
+
+The `LinearGradient` class provides a Kivy widget for 
+creating a linear gradient background with customizable 
+colors for each corner. Note that `LinearGradient` is 
+an `AnchorLayout` subclass, so you can put the widget 
+inside it.
+
 '''
 # TODO: implement alternative color spaces
 
