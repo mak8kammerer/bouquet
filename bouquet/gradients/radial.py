@@ -1,12 +1,11 @@
 '''
-RadialGradient
-==============
+Radial Gradient
+===============
 
-A radial gradient is a type of gradient where color 
-is linearly interpolated from the center to the edges. 
-At current implementation, it is possible to set only 
-two colors: the color of the center (`center_color`) 
-and the color of the border (`border_color`).
+The `RadialGradient` is a Kivy widget for creating a radial gradient effect,
+where color is linearly interpolated from the center to the edges of the
+widget. Currently, it is possible to set only two colors: the color of the
+center (`center_color`) and the color of the border (`border_color`).
 
 '''
 
