@@ -2,9 +2,8 @@
 Bouquet
 =======
 
-Welcome! Bouquet library is collection of awesome widgets and helpful tools 
-for Kivy framework. Using it, you can build modern and beautiful UI for 
-your applications. Enjoy!
+Bouquet library is collection of awesome 
+widgets and helpful tools for Kivy framework. 
 
 '''
 
