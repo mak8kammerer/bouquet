@@ -1,8 +1,8 @@
 *no logo yet, sorry*
 
-Welcome! :bouquet: **Bouquet** library is collection of awesome widgets and helpful tools
-for [Kivy framework](https://kivy.org). Using it, you can build modern and
-beautiful UI for your applications. Enjoy!
+Welcome! :bouquet: **Bouquet** library is collection of awesome widgets
+and helpful tools for [Kivy framework](https://kivy.org). With it, you can
+build modern and beautiful UI for your applications. Enjoy the experience!
 
 > :hammer_and_pick: Note that the library is under active development and some
 > features may be unstable.
@@ -23,21 +23,27 @@ beautiful UI for your applications. Enjoy!
 
 > :warning: Project is not published on Pypi.
 
-To install the latest stable branch, use this command:
+To install the latest stable version, use this command:
 
 ```bash
 pip install https://github.com/mak8kammerer/bouquet/archive/stable.zip
 ```
 
-If you want to use the latest features, install `main` branch (not recommended for production):
+If you want to use the latest features, install from `main` (development) branch (not recommended for production):
 
 ```bash
 pip install https://github.com/mak8kammerer/bouquet/archive/main.zip
 ```
 
-Also you can find the latest version (with changelogs) on the [releases page](https://github.com/mak8kammerer/bouquet/releases).
+Also you can find the latest version (with changelogs and wheels) on the [releases page](https://github.com/mak8kammerer/bouquet/releases).
 
 ## :interrobang: FAQ
+
+### Why I get `ModuleNotFoundError: No module named 'kivy'` during installation?
+
+```bash
+pip install wheel setuptools pip kivy --upgrade
+```
 
 ### Why you do not post project at Kivy Garden?
 
