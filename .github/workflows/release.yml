@@ -1,8 +1,8 @@
-on:
-    release:
-      types: [created]
-  
+name: Build wheels for release
 
+on:
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -19,21 +19,20 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install kivy
           python -m pip install --upgrade pip
-          pip install setuptools wheel
+          pip install setuptools wheel kivy
 
       - name: Build Wheels
         run: |
-          python setup.py sdist bdist_wheel
+          python setup.py bdist_wheel
 
-      - name: Upload Wheels
+      - name: Save Wheels
         uses: actions/upload-artifact@v2
         with:
           name: dist
           path: dist
       
-      - name: Release
+      - name: Upload Wheels To Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
