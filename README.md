@@ -29,13 +29,15 @@ To install the latest stable version, use this command:
 pip install https://github.com/mak8kammerer/bouquet/archive/stable.zip
 ```
 
-If you want to use the latest features, install from `main` (development) branch (not recommended for production):
+If you want to use the latest features, install from `main` (development)
+branch (not recommended for production use):
 
 ```bash
 pip install https://github.com/mak8kammerer/bouquet/archive/main.zip
 ```
 
-Also you can find the latest version (with changelogs and wheels) on the [releases page](https://github.com/mak8kammerer/bouquet/releases).
+Also you can find the latest version (with changelogs and wheels) on the
+[releases page](https://github.com/mak8kammerer/bouquet/releases).
 
 ## :interrobang: FAQ
 
