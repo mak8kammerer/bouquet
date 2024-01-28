@@ -2,8 +2,8 @@
 Gradients
 =========
 
-This module provides various types of gradients. Currently, 
-only linear and radial gradients are supported. Other 
+This module provides various types of gradients. Currently,
+only linear and radial gradients are supported. Other
 types of gradients will be added later.
 
 .. note::
@@ -13,7 +13,7 @@ types of gradients will be added later.
 
 '''
 
-from .linear import *
-from .radial import *
+from .linear import LinearGradient
+from .radial import RadialGradient
 
 __all__ = ('LinearGradient', 'RadialGradient', )

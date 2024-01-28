@@ -2,7 +2,7 @@
 Linear Gradient
 ===============
 
-The `LinearGradient` is a Kivy widget for creating a linear gradient 
+The `LinearGradient` is a Kivy widget for creating a linear gradient
 background with customizable colors for each corner. Note that `LinearGradient`
 is an `AnchorLayout` subclass, so you can put any widget inside it.
 
@@ -49,39 +49,39 @@ void main() {
 
 
 class LinearGradient(AnchorLayout):
-    
+
     top_left_color = ColorProperty(defaultvalue='green')
     '''
     Color of the top left corner of gradient.
-    
+
     :attr:`top_left_color` is an :class:`~kivy.properties.ColorProperty`
     and defaults to `green`.
     '''
-    
+
     bottom_left_color = ColorProperty(defaultvalue='black')
     '''
     Color of the top bottom corner of gradient.
-    
+
     :attr:`bottom_left_color` is an :class:`~kivy.properties.ColorProperty`
     and defaults to `black`.
     '''
-    
+
     top_right_color = ColorProperty(defaultvalue='yellow')
     '''
     Color of the top right corner of gradient.
-    
+
     :attr:`top_right_color` is an :class:`~kivy.properties.ColorProperty`
     and defaults to `yellow`.
     '''
-    
+
     bottom_right_color = ColorProperty(defaultvalue='red')
     '''
     Color of the bottom right corner of gradient.
-    
+
     :attr:`bottom_right_color` is an :class:`~kivy.properties.ColorProperty`
     and defaults to `red`.
     '''
-    
+
     def __init__(self, **kwargs):
         self.canvas = RenderContext(
             fs=FRAGMENT_SHADER,
@@ -93,18 +93,18 @@ class LinearGradient(AnchorLayout):
         self.canvas['topRightColor'] = tuple(self.top_right_color)
         self.canvas['bottomLeftColor'] = tuple(self.bottom_left_color)
         self.canvas['bottomRightColor'] = tuple(self.bottom_right_color)
-        
+
         super(LinearGradient, self).__init__(**kwargs)
-       
+
     def on_top_left_color(self, widget, new_value):
         widget.canvas['topLeftColor'] = tuple(new_value)
-       
+
     def on_bottom_left_color(self, widget, new_value):
         widget.canvas['bottomLeftColor'] = tuple(new_value)
-       
+
     def on_top_right_color(self, widget, new_value):
         widget.canvas['topRightColor'] = tuple(new_value)
-       
+
     def on_bottom_right_color(self, widget, new_value):
         widget.canvas['bottomRightColor'] = tuple(new_value)
 

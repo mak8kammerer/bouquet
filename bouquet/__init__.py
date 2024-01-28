@@ -2,8 +2,8 @@
 Bouquet
 =======
 
-Bouquet library is collection of awesome 
-widgets and helpful tools for Kivy framework. 
+Bouquet library is collection of awesome
+widgets and helpful tools for Kivy framework.
 
 '''
 
