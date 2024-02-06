@@ -1,12 +1,5 @@
 '''
-Radial Gradient
-===============
-
-The `RadialGradient` is a Kivy widget for creating a radial gradient effect,
-where color is linearly interpolated from the center to the edges of the
-widget. Currently, it is possible to set only two colors: the color of the
-center (`center_color`) and the color of the border (`border_color`).
-
+Base module for radial gradient.
 '''
 
 __all__ = ('RadialGradient', )
@@ -48,6 +41,13 @@ void main() {
 
 
 class RadialGradient(Widget):
+    '''
+    The `RadialGradient` is a Kivy widget for creating a radial gradient
+    effect, where color is linearly interpolated from the center to the
+    edges of the widget.
+    Currently, it is possible to set only two colors: the color of the
+    center (`center_color`) and the color of the border (`border_color`).
+    '''
 
     center_color = ColorProperty(defaultvalue='white')
     '''
