@@ -6,19 +6,38 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'bouquet'
-copyright = '2024, mak8kammerer'
-author = 'mak8kammerer'
-release = '0.2.0'
+import os
+import sys
+
+os.environ["KIVY_NO_ARGS"] = "true"
+os.environ["READTHEDOCS"] = "true"
+
+sys.path.insert(0, os.path.dirname(os.getcwd()))
+
+import bouquet
+
+project = bouquet.__name__
+copyright = f'2024, {bouquet.__author__}'
+author = bouquet.__author__
+release = bouquet.__version__
+
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.intersphinx'
+]
+
+# InterSphinx configuration.
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+    "kivy": ("https://kivy.org/doc/stable/", None),
+}
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
 
 
 # -- Options for HTML output -------------------------------------------------

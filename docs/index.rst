@@ -6,15 +6,15 @@
 Welcome to bouquet's documentation!
 ===================================
 
+.. automodule:: bouquet
+
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
 
-
+   api
 
 Indices and tables
 ==================
 
-* :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
