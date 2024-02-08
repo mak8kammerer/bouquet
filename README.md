@@ -1,5 +1,7 @@
 *no logo yet, sorry*
 
+[![Documentation Status](https://readthedocs.org/projects/bouquet-kivy/badge/?version=latest)](https://bouquet-kivy.readthedocs.io/en/latest/?badge=latest)
+
 Welcome! :bouquet: **Bouquet** library is collection of awesome widgets
 and helpful tools for [Kivy framework](https://kivy.org). With it, you can
 build modern and beautiful UI for your applications. Enjoy the experience!
@@ -18,6 +20,10 @@ build modern and beautiful UI for your applications. Enjoy the experience!
 - [ ] Animations (including 3D)
 - [ ] Cool effects
 - [ ] and more!
+
+## :book: Documentation
+
+Available at [Read the Docs](http://bouquet-kivy.rtfd.io/).
 
 ## :desktop_computer: Installation
 
