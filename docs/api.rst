@@ -1,4 +1,4 @@
-Bouquet's API Reference
+API Reference
 =======================
 
 Gradients
