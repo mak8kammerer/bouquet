@@ -75,13 +75,16 @@ class RadialGradient(Widget):
         self.canvas['centerColor'] = tuple(self.center_color)
         self.canvas['borderColor'] = tuple(self.border_color)
 
+        fbind = self.fbind
+        callback = self._set_color
+        fbind('center_color', callback, uniform_name='centerColor')
+        fbind('border_color', callback, uniform_name='borderColor')
+
         super(RadialGradient, self).__init__(**kwargs)
 
-    def on_center_color(self, widget, new_value):
-        widget.canvas['centerColor'] = tuple(new_value)
-
-    def on_border_color(self, widget, new_value):
-        widget.canvas['borderColor'] = tuple(new_value)
+    def _set_color(self, widget, value, uniform_name=None):
+        if uniform_name is not None:
+            widget.canvas[uniform_name] = tuple(value)
 
 
 Builder.load_string(KV)

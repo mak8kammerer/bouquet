@@ -98,19 +98,18 @@ class LinearGradient(AnchorLayout):
         self.canvas['bottomLeftColor'] = tuple(self.bottom_left_color)
         self.canvas['bottomRightColor'] = tuple(self.bottom_right_color)
 
+        fbind = self.fbind
+        callback = self._set_color
+        fbind('top_left_color', callback, uniform_name='topLeftColor')
+        fbind('top_right_color', callback, uniform_name='topRightColor')
+        fbind('bottom_left_color', callback, uniform_name='bottomLeftColor')
+        fbind('bottom_right_color', callback, uniform_name='bottomRightColor')
+
         super(LinearGradient, self).__init__(**kwargs)
 
-    def on_top_left_color(self, widget, new_value):
-        widget.canvas['topLeftColor'] = tuple(new_value)
-
-    def on_bottom_left_color(self, widget, new_value):
-        widget.canvas['bottomLeftColor'] = tuple(new_value)
-
-    def on_top_right_color(self, widget, new_value):
-        widget.canvas['topRightColor'] = tuple(new_value)
-
-    def on_bottom_right_color(self, widget, new_value):
-        widget.canvas['bottomRightColor'] = tuple(new_value)
+    def _set_color(self, widget, value, uniform_name=None):
+        if uniform_name is not None:
+            widget.canvas[uniform_name] = tuple(value)
 
 
 Builder.load_string(KV)
