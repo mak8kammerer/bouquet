@@ -27,7 +27,8 @@ release = bouquet.__version__
 
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.intersphinx'
+    'sphinx.ext.intersphinx',
+    'sphinx_copybutton'
 ]
 
 # InterSphinx configuration.
