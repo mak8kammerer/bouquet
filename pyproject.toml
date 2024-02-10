@@ -1,0 +1,4 @@
+[build-system]
+# to use the Kivy logger in setup.py (__version__)
+requires = ["kivy"]
+build-backend = "setuptools.build_meta"
