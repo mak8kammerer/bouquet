@@ -19,7 +19,7 @@ setup(
     license='MIT',
     packages=find_packages(),
     install_requires=['kivy'],
-    extras_requires={'doc': ['sphinx', 'sphinx-copybutton', 'furo']},
+    extras_require={'doc': ['sphinx', 'sphinx-copybutton', 'furo']},
     python_requires='>=3.7',
     classifiers=[
         'Development Status :: 4 - Beta',
