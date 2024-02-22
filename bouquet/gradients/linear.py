@@ -93,10 +93,12 @@ class LinearGradient(AnchorLayout):
             use_parent_modelview=True,
             use_parent_frag_modelview=True
         )
-        self.canvas['topLeftColor'] = tuple(self.top_left_color)
-        self.canvas['topRightColor'] = tuple(self.top_right_color)
-        self.canvas['bottomLeftColor'] = tuple(self.bottom_left_color)
-        self.canvas['bottomRightColor'] = tuple(self.bottom_right_color)
+        
+        canvas = self.canvas
+        canvas['topLeftColor'] = tuple(self.top_left_color)
+        canvas['topRightColor'] = tuple(self.top_right_color)
+        canvas['bottomLeftColor'] = tuple(self.bottom_left_color)
+        canvas['bottomRightColor'] = tuple(self.bottom_right_color)
 
         fbind = self.fbind
         callback = self._set_color

@@ -72,8 +72,10 @@ class RadialGradient(Widget):
             use_parent_modelview=True,
             use_parent_frag_modelview=True
         )
-        self.canvas['centerColor'] = tuple(self.center_color)
-        self.canvas['borderColor'] = tuple(self.border_color)
+        
+        canvas = self.canvas
+        canvas['centerColor'] = tuple(self.center_color)
+        canvas['borderColor'] = tuple(self.border_color)
 
         fbind = self.fbind
         callback = self._set_color
