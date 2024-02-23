@@ -68,6 +68,7 @@ class RadialGradient(Widget):
     @staticmethod
     def render_texture(**kwargs):
         '''
+        Renders gradient at Fbo and returns the texture.
         '''
         widget = RadialGradient(**kwargs)
         fbo = Fbo(size=widget.size)
