@@ -69,6 +69,9 @@ class RadialGradient(Widget):
     def render_texture(**kwargs):
         '''
         Renders gradient at Fbo and returns the texture.
+        
+        :param kwargs: 
+            Any :class:`RadialGradient` properties. 
         '''
         widget = RadialGradient(**kwargs)
         fbo = Fbo(size=widget.size)

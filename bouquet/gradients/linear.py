@@ -91,6 +91,9 @@ class LinearGradient(AnchorLayout):
     def render_texture(**kwargs) -> Texture:
         '''
         Renders gradient at Fbo and returns the texture.
+        
+        :param kwargs: 
+            Any :class:`LinearGradient` properties. 
         '''
         widget = LinearGradient(**kwargs)
         fbo = Fbo(size=widget.size)
