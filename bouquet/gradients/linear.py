@@ -7,7 +7,8 @@ __all__ = ('LinearGradient', )
 
 from kivy.lang import Builder
 from kivy.factory import Factory
-from kivy.graphics import RenderContext
+from kivy.graphics import RenderContext, Fbo
+from kivy.graphics.texture import Texture
 from kivy.properties import ColorProperty
 from kivy.uix.anchorlayout import AnchorLayout
 
@@ -85,6 +86,16 @@ class LinearGradient(AnchorLayout):
     :attr:`bottom_right_color` is an :class:`~kivy.properties.ColorProperty`
     and defaults to `red`.
     '''
+
+    @staticmethod
+    def render_texture(**kwargs) -> Texture:
+        '''
+        '''
+        widget = LinearGradient(**kwargs)
+        fbo = Fbo(size=widget.size)
+        fbo.add(widget.canvas)
+        fbo.draw()
+        return fbo.texture
 
     def __init__(self, **kwargs):
         self.canvas = RenderContext(
