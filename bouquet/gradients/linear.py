@@ -95,9 +95,9 @@ class LinearGradient(AnchorLayout):
         :param kwargs: 
             Any :class:`LinearGradient` properties. 
         '''
-        widget = LinearGradient(**kwargs)
-        fbo = Fbo(size=widget.size)
-        fbo.add(widget.canvas)
+        fbo = Fbo(size=kwargs.get('size', (100, 100)))
+        with fbo:
+            LinearGradient(**kwargs).canvas
         fbo.draw()
         return fbo.texture
 
