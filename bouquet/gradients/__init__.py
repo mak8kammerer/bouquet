@@ -14,7 +14,6 @@ Examples
     from kivy.app import App
     from bouquet.gradients import LinearGradient
 
-
     class MyApp(App):
 
         def build(self):
@@ -24,7 +23,6 @@ Examples
                 bottom_left_color='orange',
                 bottom_right_color='orange',
             )
-
 
     MyApp().run()
 
@@ -43,14 +41,76 @@ Examples
         border_color: (1.0, 0.0, 0.0, 0.0)
     """
 
+    class MyApp(App):
+
+        def build(self):
+            return Builder.load_string(KV)
+
+     MyApp().run()
+     
+Gradient Textures
+~~~~~~~~~~~~~~~~~
+
+This is possible to use gradient textures with Vertex Instructions via the 
+render_texture() function.
+
+Pure Python example:
+
+.. code-block:: python
+
+    from kivy.app import App
+    from kivy.graphics import Ellipse
+    from kivy.uix.widget import Widget
+
+    from bouquet.gradients import LinearGradient
+
+    class EllipseWithGradient(Widget):
+
+        def __init__(self, **kwargs):
+            super().__init__(**kwargs)
+            with self.canvas:
+                self.ellipse = Ellipse(
+                    pos=self.pos,
+                    size=self.size,
+                    texture=LinearGradient.render_texture(size=self.size)
+                )
+
+        def on_size(self, widget, size):
+            self.ellipse.size = size
+            self.ellipse.texture = LinearGradient.render_texture(size=size)
+
+    class MyApp(App):
+
+        def build(self):
+            return EllipseWithGradient()
+
+    MyApp().run()
+
+Example with KvLang:
+
+.. code-block:: python
+
+    from kivy.app import App
+    from kivy.lang import Builder
+
+    KV = """
+    #: import LinearGradient bouquet.gradients.LinearGradient
+    Widget:
+        canvas:
+            Color:
+                rgb: 1.0, 1.0, 1.0
+            Ellipse:
+                pos: self.pos
+                size: self.size
+                texture: LinearGradient.render_texture(size=self.size)
+    """
 
     class MyApp(App):
 
         def build(self):
             return Builder.load_string(KV)
 
-
-     MyApp().run()
+    MyApp().run()
 '''
 
 from .linear import LinearGradient
