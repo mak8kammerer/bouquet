@@ -48,8 +48,8 @@ Examples
 
      MyApp().run()
      
-Gradient Textures
-~~~~~~~~~~~~~~~~~
+Textures
+~~~~~~~~
 
 This is possible to use gradient textures with Vertex Instructions via the 
 `render_texture()` function.
