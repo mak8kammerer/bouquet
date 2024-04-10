@@ -29,7 +29,6 @@ jobs:
       - name: Save Wheels
         uses: actions/upload-artifact@v2
         with:
-          name: dist
           path: *.whl
       
       - name: Upload Wheels To Release
