@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: dist
-          path: /*.whl
+          path: '**/*.whl'
       
       - name: Upload Wheels To Release
         uses: softprops/action-gh-release@v1
