@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Wheels
         run: |
-          python setup.py bdist_wheel
+          python -m pip wheel --no-deps .
 
       - name: Save Wheels
         uses: actions/upload-artifact@v2
