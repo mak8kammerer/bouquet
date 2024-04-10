@@ -1,3 +1,64 @@
 [build-system]
-# to use the Kivy logger in setup.py (__version__)
-requires = ["kivy", "setuptools"]
+# install Kivy before building because of __version__
+requires = ["kivy", "setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+version = {attr = "bouquet.__version__"}
+
+[project]
+name = "bouquet"
+authors = [
+    {name = "mak8kammerer", email = "mmmakkkss@proton.me"}
+]
+description = "A collection of widgets and useful tools for Kivy."
+readme = {file = "README.md", content-type = "text/markdown"}
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Developers",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: POSIX :: BSD :: FreeBSD",
+    "Operating System :: MacOS",
+    "Operating System :: Android",
+    "Operating System :: iOS",
+    "Topic :: Software Development :: Widget Sets",
+    "Topic :: Multimedia :: Graphics",
+    "Environment :: GPU"
+]
+keywords = [
+    "kivy",
+    "widget",
+    "graphics",
+    "gradient",
+    "tools"
+]
+
+dependencies = ["kivy"]
+requires-python = ">=3.7"
+
+dynamic = ["version"]
+
+[project.optional-dependencies]
+doc = [
+    "sphinx", 
+    "sphinx-copybutton",
+    "furo"
+]
+
+[project.urls]
+Homepage = "https://github.com/mak8kammerer/bouquet"
+Documentation = "http://bouquet-kivy.readthedocs.io/"
+Repository = "https://github.com/mak8kammerer/bouquet.git"
+Issues = "https://github.com/mak8kammerer/bouquet/issues"
+Changelog = "https://github.com/mak8kammerer/bouquet/releases"
