@@ -62,3 +62,7 @@ that perform many different tasks.
 ### Why is the library so named?
 
 Bouquet is a collection of flowers in a creative arrangement :blush:
+
+## :balance_scale: License
+
+**Bouquet** is [MIT licensed](LICENSE).
