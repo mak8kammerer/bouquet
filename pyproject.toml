@@ -55,6 +55,9 @@ doc = [
     "sphinx-copybutton",
     "furo"
 ]
+test = [
+    "pytest"
+]
 
 [project.urls]
 Homepage = "https://github.com/mak8kammerer/bouquet"
