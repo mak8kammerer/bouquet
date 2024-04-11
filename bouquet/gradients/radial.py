@@ -69,9 +69,9 @@ class RadialGradient(Widget):
     def render_texture(**kwargs):
         '''
         Renders gradient at Fbo and returns the texture.
-        
-        :param kwargs: 
-            Any :class:`RadialGradient` properties. 
+
+        :param kwargs:
+            Any :class:`RadialGradient` properties.
         '''
         fbo = Fbo(size=kwargs.get('size', (100, 100)))
         with fbo:
@@ -86,7 +86,7 @@ class RadialGradient(Widget):
             use_parent_modelview=True,
             use_parent_frag_modelview=True
         )
-        
+
         canvas = self.canvas
         canvas['centerColor'] = tuple(self.center_color)
         canvas['borderColor'] = tuple(self.border_color)

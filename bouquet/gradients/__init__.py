@@ -47,11 +47,11 @@ Examples
             return Builder.load_string(KV)
 
      MyApp().run()
-     
+
 Textures
 ~~~~~~~~
 
-This is possible to use gradient textures with Vertex Instructions via the 
+This is possible to use gradient textures with Vertex Instructions via the
 `render_texture()` function.
 
 Pure Python example:

@@ -91,9 +91,9 @@ class LinearGradient(AnchorLayout):
     def render_texture(**kwargs) -> Texture:
         '''
         Renders gradient at Fbo and returns the texture.
-        
-        :param kwargs: 
-            Any :class:`LinearGradient` properties. 
+
+        :param kwargs:
+            Any :class:`LinearGradient` properties.
         '''
         fbo = Fbo(size=kwargs.get('size', (100, 100)))
         with fbo:
@@ -108,7 +108,7 @@ class LinearGradient(AnchorLayout):
             use_parent_modelview=True,
             use_parent_frag_modelview=True
         )
-        
+
         canvas = self.canvas
         canvas['topLeftColor'] = tuple(self.top_left_color)
         canvas['topRightColor'] = tuple(self.top_right_color)
