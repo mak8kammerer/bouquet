@@ -53,6 +53,16 @@ Also you can find the latest version (with changelogs and wheels) on the
 pip install wheel setuptools pip kivy --upgrade
 ```
 
+### What about demo script?
+
+At terminal, run this command (replace `python3` with `python`, if you use Windows):
+
+```bash
+python3 -m bouquet
+```
+
+This command will launch the demo application.
+
 ### Why you do not post project at Kivy Garden?
 
 Each flower in the kivy-garden should be a single widget (or a group of widgets)
