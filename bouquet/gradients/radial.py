@@ -45,8 +45,10 @@ class RadialGradient(Widget):
     Widget for creating a radial gradient effect, in which color is linearly
     interpolated from the center to the edges of the widget.
 
-    Currently, it is possible to set only two colors: the color of the center
-    (:attr:`center_color`) and the color of the border (:attr:`border_color`).
+    .. note::
+        Currently, it is possible to set only two colors: the color
+        of the center (:attr:`center_color`) and the color of the
+        border (:attr:`border_color`).
     '''
 
     center_color = ColorProperty(defaultvalue='white')

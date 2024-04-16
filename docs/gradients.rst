@@ -1,8 +1,5 @@
-API Reference
-=======================
-
 Gradients
----------
+=======================
 
 .. automodule:: bouquet.gradients
 

@@ -48,7 +48,7 @@ class LinearGradient(AnchorLayout):
     Widget for creating a linear gradient background with customizable colors
     for each corner.
 
-    .. tip::
+    .. hint::
 
         :class:`LinearGradient` is an
         :class:`~kivy.uix.anchorlayout.AnchorLayout`

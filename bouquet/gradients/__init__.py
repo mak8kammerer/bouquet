@@ -1,8 +1,15 @@
 '''
-`bouquet.gradients` module provides various types of gradients.
+``bouquet.gradients`` module provides various types of gradients.
 Currently, only linear (:class:`LinearGradient`) and radial
 (:class:`RadialGradient`) gradients are supported. Other types of
 gradients will be added later.
+
+How to use gradients with Vertex Instructions?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is possible to use gradient textures with Vertex Instructions via the
+``render_texture()`` function. You can take a look at code examples in the
+:ref:`Examples` section below.
 
 Examples
 ~~~~~~~~
@@ -48,45 +55,7 @@ Examples
 
      MyApp().run()
 
-Textures
-~~~~~~~~
-
-This is possible to use gradient textures with Vertex Instructions via the
-`render_texture()` function.
-
-Pure Python example:
-
-.. code-block:: python
-
-    from kivy.app import App
-    from kivy.graphics import Ellipse
-    from kivy.uix.widget import Widget
-
-    from bouquet.gradients import LinearGradient
-
-    class EllipseWithGradient(Widget):
-
-        def __init__(self, **kwargs):
-            super().__init__(**kwargs)
-            with self.canvas:
-                self.ellipse = Ellipse(
-                    pos=self.pos,
-                    size=self.size,
-                    texture=LinearGradient.render_texture(size=self.size)
-                )
-
-        def on_size(self, widget, size):
-            self.ellipse.size = size
-            self.ellipse.texture = LinearGradient.render_texture(size=size)
-
-    class MyApp(App):
-
-        def build(self):
-            return EllipseWithGradient()
-
-    MyApp().run()
-
-Example with KvLang:
+:func:`LinearGradient.render_texture`:
 
 .. code-block:: python
 
@@ -109,6 +78,48 @@ Example with KvLang:
 
         def build(self):
             return Builder.load_string(KV)
+
+    MyApp().run()
+
+:func:`RadialGradient.render_texture`:
+
+.. code-block:: python
+
+    from kivy.app import App
+    from kivy.graphics import Ellipse
+    from kivy.uix.widget import Widget
+
+    from bouquet.gradients import RadialGradient
+
+    class EllipseWithRadialGradient(Widget):
+
+        def __init__(self, **kwargs):
+            super().__init__(**kwargs)
+            self.center_color = "#ff0000"   # red
+            self.border_color = "#ffff00"   # yellow
+            with self.canvas:
+                self.ellipse = Ellipse(
+                    pos=self.pos,
+                    size=self.size,
+                    texture=RadialGradient.render_texture(
+                        size=self.size,
+                        center_color=self.center_color,
+                        border_color=self.border_color
+                    )
+                )
+
+        def on_size(self, widget, size):
+            self.ellipse.size = size
+            self.ellipse.texture = RadialGradient.render_texture(
+                size=self.size,
+                center_color=self.center_color,
+                border_color=self.border_color
+            )
+
+    class MyApp(App):
+
+        def build(self):
+            return EllipseWithRadialGradient()
 
     MyApp().run()
 '''

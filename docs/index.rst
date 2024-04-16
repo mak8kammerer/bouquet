@@ -8,10 +8,12 @@ Welcome to bouquet's documentation!
 
 .. automodule:: bouquet
 
-.. toctree::
-   :maxdepth: 3
+**Tiny reference:**
 
-   api
+.. toctree::
+   :maxdepth: 1
+
+   gradients   
 
 Indices and tables
 ==================
