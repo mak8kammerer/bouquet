@@ -71,7 +71,7 @@ class RadialGradient(Widget):
     @staticmethod
     def render_texture(**kwargs) -> Texture:
         '''
-        Renders gradient at Fbo and returns the texture.
+        Renders gradient at FBO and returns the texture.
 
         :param kwargs:
             Any :class:`RadialGradient` properties.
