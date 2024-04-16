@@ -54,8 +54,6 @@ class GradientsTests(GraphicUnitTest):
         )
         self.assertEqual(texture.size, tex_size)
 
-        texture.save('image.png')
-
         pixels = texture.pixels
         self.assertEqual(len(pixels), tex_size[0] * tex_size[1] * 4)
 
