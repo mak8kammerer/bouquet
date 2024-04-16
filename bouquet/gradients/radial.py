@@ -8,6 +8,7 @@ from kivy.lang import Builder
 from kivy.factory import Factory
 from kivy.uix.widget import Widget
 from kivy.graphics import RenderContext, Fbo
+from kivy.graphics.texture import Texture
 from kivy.properties import ColorProperty
 
 # Make sure that OpenGL context is created
@@ -68,7 +69,7 @@ class RadialGradient(Widget):
     '''
 
     @staticmethod
-    def render_texture(**kwargs):
+    def render_texture(**kwargs) -> Texture:
         '''
         Renders gradient at Fbo and returns the texture.
 
