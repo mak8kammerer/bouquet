@@ -1,6 +1,6 @@
 '''
 ``bouquet.gradients`` module provides various types of gradients.
-Currently, only linear (:class:`LinearGradient`) and radial
+Currently, only bilinear (:class:`BilinearGradient`) and radial
 (:class:`RadialGradient`) gradients are supported. Other types of
 gradients will be added later.
 
@@ -14,17 +14,17 @@ This is possible to use gradient textures with Vertex Instructions via the
 Examples
 ~~~~~~~~
 
-:class:`LinearGradient`:
+:class:`BilinearGradient`:
 
 .. code-block:: python
 
     from kivy.app import App
-    from bouquet.gradients import LinearGradient
+    from bouquet.gradients import BilinearGradient
 
     class MyApp(App):
 
         def build(self):
-            return LinearGradient(
+            return BilinearGradient(
                 top_left_color='purple',
                 top_right_color='purple',
                 bottom_left_color='orange',
@@ -55,7 +55,7 @@ Examples
 
      MyApp().run()
 
-:func:`LinearGradient.render_texture`:
+:func:`BilinearGradient.render_texture`:
 
 .. code-block:: python
 
@@ -63,7 +63,7 @@ Examples
     from kivy.lang import Builder
 
     KV = """
-    #: import LinearGradient bouquet.gradients.LinearGradient
+    #: import BilinearGradient bouquet.gradients.BilinearGradient
     Widget:
         canvas:
             Color:
@@ -71,7 +71,7 @@ Examples
             Ellipse:
                 pos: self.pos
                 size: self.size
-                texture: LinearGradient.render_texture(size=self.size)
+                texture: BilinearGradient.render_texture(size=self.size)
     """
 
     class MyApp(App):
@@ -124,7 +124,7 @@ Examples
     MyApp().run()
 '''
 
-from .linear import LinearGradient
+from .bilinear import BilinearGradient
 from .radial import RadialGradient
 
-__all__ = ('LinearGradient', 'RadialGradient', )
+__all__ = ('BilinearGradient', 'RadialGradient', )

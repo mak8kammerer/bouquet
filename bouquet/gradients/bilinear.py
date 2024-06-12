@@ -1,9 +1,9 @@
 '''
-Base module for linear gradient.
+Base module for bilinear gradient.
 '''
 # TODO: implement alternative color spaces
 
-__all__ = ('LinearGradient', )
+__all__ = ('BilinearGradient', )
 
 from kivy.lang import Builder
 from kivy.factory import Factory
@@ -17,7 +17,7 @@ import kivy.core.window
 
 
 KV = '''
-<LinearGradient>:
+<BilinearGradient>:
     canvas:
         Color:
             rgba: 1.0, 1.0, 1.0, 1.0
@@ -43,14 +43,14 @@ void main() {
 '''
 
 
-class LinearGradient(AnchorLayout):
+class BilinearGradient(AnchorLayout):
     '''
-    Widget for creating a linear gradient background with customizable colors
+    Widget for creating a bilinear gradient background with customizable colors
     for each corner.
 
     .. hint::
 
-        :class:`LinearGradient` is an
+        :class:`BilinearGradient` is an
         :class:`~kivy.uix.anchorlayout.AnchorLayout`
         subclass, so you can put any widget inside it.
     '''
@@ -93,11 +93,11 @@ class LinearGradient(AnchorLayout):
         Renders gradient at FBO and returns the texture.
 
         :param kwargs:
-            Any :class:`LinearGradient` properties.
+            Any :class:`BilinearGradient` properties.
         '''
         fbo = Fbo(size=kwargs.get('size', (100, 100)))
         with fbo:
-            LinearGradient(**kwargs).canvas
+            BilinearGradient(**kwargs).canvas
         fbo.draw()
         return fbo.texture
 
@@ -122,7 +122,7 @@ class LinearGradient(AnchorLayout):
         fbind('bottom_left_color', callback, uniform_name='bottomLeftColor')
         fbind('bottom_right_color', callback, uniform_name='bottomRightColor')
 
-        super(LinearGradient, self).__init__(**kwargs)
+        super(BilinearGradient, self).__init__(**kwargs)
 
     def _set_color(self, widget, value, uniform_name=None):
         if uniform_name is not None:
@@ -130,4 +130,4 @@ class LinearGradient(AnchorLayout):
 
 
 Builder.load_string(KV)
-Factory.register('LinearGradient', cls=LinearGradient)
+Factory.register('BilinearGradient', cls=BilinearGradient)
