@@ -3,22 +3,22 @@ from kivy.tests.common import GraphicUnitTest
 
 class GradientsTests(GraphicUnitTest):
 
-    def test_linear_gradient(self):
-        from bouquet.gradients import LinearGradient
+    def test_bilinear_gradient(self):
+        from bouquet.gradients import BilinearGradient
 
         render = self.render
 
-        wid = LinearGradient()
+        wid = BilinearGradient()
         render(wid)
 
         wid.bottom_left_color = '#ff0000'
         render(wid)
 
-        texture = LinearGradient.render_texture()
+        texture = BilinearGradient.render_texture()
         self.assertEqual(texture.size, (100, 100))
 
         tex_size = (500, 600)
-        texture = LinearGradient.render_texture(
+        texture = BilinearGradient.render_texture(
             size=tex_size,
             bottom_left_color='#00000000'
         )
