@@ -1,6 +1,6 @@
 name: Unittests
 # Kivy testing set up at Linux is overcomplicated, it requires 
-# installing bunch of packages, manual start of X server.
+# installation of many packages, manual launch of X server.
 # That's why I'm running tests on Windows. 
 
 on: [push, pull_request]
