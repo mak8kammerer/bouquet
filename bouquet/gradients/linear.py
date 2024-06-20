@@ -1,13 +1,14 @@
 '''
 Base module for linear gradient.
 '''
+# TODO: optimizations
 
 __all__ = ('LinearGradient', )
 
 from kivy.lang import Builder
 from kivy.factory import Factory
+from kivy.graphics import RenderContext
 from kivy.properties import NumericProperty
-from kivy.graphics import RenderContext, BindTexture
 
 from .base import GradientBase
 
@@ -17,6 +18,9 @@ KV = '''
     canvas:
         Color:
             rgba: 1.0, 1.0, 1.0, 1.0
+        BindTexture:
+            index: 1
+            texture: self._1d_gradient_texture
         Rectangle:
             pos: self.pos
             size: self.size
@@ -51,20 +55,12 @@ class LinearGradient(GradientBase):
             use_parent_frag_modelview=True
         )
         self.canvas['gradientTexture'] = 1
-        
-        fbind = self.fbind
-        fbind('angle', self._update_angle)
-        fbind('_1d_gradient_texture', self._update_texture)
-
+        self.fbind('angle', self._update_angle)
         super(LinearGradient, self).__init__(**kwargs)
 
     def _update_angle(self, widget, angle):
         widget.canvas['angle'] = angle
 
-    def _update_texture(self, widget, texture):
-        with widget.canvas:
-            BindTexture(texture=texture, index=1)
 
- 
 Builder.load_string(KV)
 Factory.register('LinearGradient', cls=LinearGradient)

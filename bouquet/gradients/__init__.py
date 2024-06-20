@@ -131,4 +131,4 @@ from .linear import LinearGradient
 from .bilinear import BilinearGradient
 from .radial import RadialGradient
 
-__all__ = ('ColorStop', 'BilinearGradient', 'RadialGradient', )
+__all__ = ('ColorStop', 'LinearGradient', 'BilinearGradient', 'RadialGradient')

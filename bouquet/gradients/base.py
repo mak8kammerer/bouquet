@@ -7,7 +7,8 @@ __all__ = ('ColorStop', 'GradientBase')
 from kivy.event import EventDispatcher
 from kivy.graphics import Fbo, Mesh
 from kivy.graphics.texture import Texture
-from kivy.properties import ColorProperty, BoundedNumericProperty, ListProperty, ObjectProperty
+from kivy.properties import ColorProperty, BoundedNumericProperty, \
+                                ListProperty, ObjectProperty
 from kivy.uix.anchorlayout import AnchorLayout
 
 
@@ -17,7 +18,7 @@ FBO_VERTEX_SHADER = '''
 #endif
 
 attribute float vertexPos;
-attribute vec4 vertexColor;
+attribute vec4  vertexColor;
 
 varying vec4 fragmentColor;
 
@@ -76,25 +77,39 @@ class ColorStop(EventDispatcher):
 class GradientBase(AnchorLayout):
     '''
     Base class for linear and radial gradients.
-    Do not use it directly; use a LinearGradient or a RadialGradient instead.
+    Do not use it directly; use a :class:`LinearGradient` or a :class:`RadialGradient`.
     '''
     
     _1d_gradient_texture = ObjectProperty()
 
     color_stops = ListProperty()
     '''
-    bouquet supports up to 1024 color stops.
-    raises
-    
-    If list is empty, 
-    
-    :attr:`color_stops` is an :class:`~kivy.properties.ListProperty`.
+    List of :class:`ColorStop` objects, describes how the gradient will look.
+    If the list is empty, the gradient will be completely white.
+
+    .. warning::
+        bouquet gradients supports up to 1024 color stops.
+
+    :raises:
+        ValueError: If the list length is greater than 1024.
+        TypeError: If the list contains anything other than :class:`ColorStop` objects.
+
+    :attr:`color_stops` is a :class:`~kivy.properties.ListProperty` and is empty by default.
     '''
-    
-    def on_color_stops(self, widget, stops):
+
+    def __init__(self, **kwargs):
+        self.fbind('color_stops', self._on_color_stops)
+        
+        self._default_texture = Texture.create(size=(1, 1))
+        self._default_texture.blit_buffer(b'\xff\xff\xff')
+        self._1d_gradient_texture = self._default_texture
+        
+        super(AnchorLayout, self).__init__(**kwargs)
+
+    def _on_color_stops(self, widget, stops):
         if len(stops) > 1024:
             raise ValueError('More than 1024 color stops is not supported.')
-        callback = widget._update
+        callback = widget._update_mesh
         for s in stops:
             if isinstance(s, ColorStop):
                 s.bind(color=callback, position=callback)
@@ -103,8 +118,12 @@ class GradientBase(AnchorLayout):
                 raise TypeError(f'Expected ColorStop object, got {c} instead.')
         callback()
         
-    def _update(self):
+    def _update_mesh(self, *args):        
         stops = sorted(self.color_stops, key=lambda stop: stop.position)
+
+        if not stops:
+            self._1d_gradient_texture = self._default_texture
+            return
 
         first_stop = stops[0]
         if first_stop.position != 0.0:
