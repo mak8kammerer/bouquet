@@ -1,6 +1,7 @@
 '''
 Base module for gradients with color stops.
 '''
+# TODO: optimizations
 
 __all__ = ('ColorStop', 'GradientBase')
 
@@ -101,7 +102,7 @@ class GradientBase(AnchorLayout):
         self.fbind('color_stops', self._on_color_stops)
         
         self._default_texture = Texture.create(size=(1, 1))
-        self._default_texture.blit_buffer(b'\xff\xff\xff')
+        self._default_texture.blit_buffer(b'\xff\xff\xff\xff')
         self._1d_gradient_texture = self._default_texture
         
         super(AnchorLayout, self).__init__(**kwargs)
