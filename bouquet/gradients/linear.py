@@ -48,7 +48,7 @@ uniform mat4 gradientMatrix;
 
 void main() {
     frag_color = color * vec4(1.0, 1.0, 1.0, opacity);
-    tex_coord = (gradientMatrix * vec4(vTexCoords0, 0.0, 1.0)).xy;
+    vec2 tex_coord = (gradientMatrix * vec4(vTexCoords0, 0.0, 1.0)).xy;
     tex_coord0 = (tex_coord + 1.0) * 0.5;
     gl_Position = projection_mat * modelview_mat * vec4(vPosition, 0.0, 1.0);
 }
