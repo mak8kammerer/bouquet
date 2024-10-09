@@ -2,6 +2,7 @@
 Base module for gradients with color stops.
 '''
 # TODO: optimizations
+# FIXME: possible problems with alpha channel
 
 __all__ = ('ColorStop', 'GradientBase')
 

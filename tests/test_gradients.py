@@ -1,5 +1,6 @@
 from kivy.tests.common import GraphicUnitTest
 
+#TODO: test transparency
 
 class GradientsTests(GraphicUnitTest):
 
@@ -86,8 +87,43 @@ class GradientsTests(GraphicUnitTest):
             wid.color_stops = [1]
 
     def test_linear_gradient(self):
-        #TODO: test transparency
-        pass
+        from bouquet.gradients import ColorStop, LinearGradient
+        
+        render = self.render
+
+        wid = LinearGradient()
+        render(wid)
+        
+        wid.color_stops = [ColorStop(color='red')]
+        render(wid)
+        
+        wid.color_stops.append(ColorStop(color='#ffff00ff', position=0.75))
+        wid.angle = -70
+        render(wid)
+        
+        texture = LinearGradient.render_texture()
+        self.assertEqual(texture.size, (100, 100))
+        self.assertEqual(len(texture.pixels), 4 * 100 * 100)
+        self.assertEqual(texture.pixels, b'\xff\xff\xff\xff' * 100 * 100)
+        
+        texture = LinearGradient.render_texture(
+            color_stops=[ColorStop(color='red')], size=(50, 70)
+        )
+        self.assertEqual(texture.size, (50, 70))
+        self.assertEqual(len(texture.pixels), 4 * 50 * 70)
+        self.assertEqual(texture.pixels, b'\xff\x00\x00\xff' * 70 * 50)
+        
+        texture = LinearGradient.render_texture(
+            color_stops=[
+                ColorStop(color='red'), 
+                ColorStop(color=(0.0, 0.0, 0.0, 1.0), position=1.0)
+            ], 
+            size=(1, 3)
+        )
+        self.assertEqual(texture.size, (1, 3))
+        self.assertEqual(len(texture.pixels), 4 * 1 * 3)
+        color = b'\x80\x00\x00\xff'  # (128, 0, 0, 255)
+        self.assertEqual(texture.pixels[4:8], color)
 
     def test_bilinear_gradient(self):
         from bouquet.gradients import BilinearGradient
