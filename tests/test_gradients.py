@@ -114,6 +114,7 @@ class GradientsTests(GraphicUnitTest):
         self.assertEqual(len(texture.pixels), 4 * 50 * 70)
         self.assertEqual(texture.pixels, b'\xff\x00\x00\xff' * 70 * 50)
 
+        # horizontal
         texture = LinearGradient.render_texture(
             color_stops=[
                 ColorStop(color='red'),
@@ -124,6 +125,19 @@ class GradientsTests(GraphicUnitTest):
         self.assertEqual(texture.size, (1, 3))
         self.assertEqual(len(texture.pixels), 4 * 1 * 3)
         color = b'\x80\x00\x00\xff'  # (128, 0, 0, 255)
+        self.assertEqual(texture.pixels[4:8], color)
+
+        # vertical
+        texture = LinearGradient.render_texture(
+            color_stops=[
+                ColorStop(color='#ffffff'),
+                ColorStop(color='#ff00ffff', position=1.0)
+            ],
+            size=(3, 1)
+        )
+        self.assertEqual(texture.size, (3, 1))
+        self.assertEqual(len(texture.pixels), 4 * 3 * 1)
+        color = b'\xff\x80\xff\xff'  # (255, 128, 255, 255)
         self.assertEqual(texture.pixels[4:8], color)
 
     def test_bilinear_gradient(self):
