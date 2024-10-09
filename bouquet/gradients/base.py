@@ -46,32 +46,37 @@ void main() {
 
 class ColorStop(EventDispatcher):
     '''
-    The ColorStop class is used together with :class:`LinearGradient` and :class:`RadialGradient`.
-    It defines a specific color at a certain position within the gradient.
+    The ColorStop class is used together with :class:`LinearGradient` and
+    :class:`RadialGradient`. It defines a specific color at a certain position
+    within the gradient.
     '''
-    
+
     color = ColorProperty(allownone=False)
     '''
     The color to display at the stop :attr:`position`.
-    
+
     :attr:`color` is an :class:`~kivy.properties.ColorProperty`
     and defaults to `white`.
     '''
-    
-    position = BoundedNumericProperty(0.0, min=0.0, max=1.0, errorhandler=lambda x: 1.0 if x > 1.0 else 0.0)
+
+    position = BoundedNumericProperty(
+        0.0, min=0.0, max=1.0, errorhandler=lambda x: 1.0 if x > 1.0 else 0.0
+    )
     '''
-    The position of the color stop. The value should be in the range from 0.0 (start; one edge of gradient) to 1.0 (end; another edge of gradient).
+    The position of the color stop. The value should be in the range from 0.0
+    (start; one edge of gradient) to 1.0 (end; another edge of gradient).
     If the value exceeds the bounds, it will be set to:
         - 1.0 if the value is greater than 1.0
         - 0.0 if the value is less than 0.0
-        
-    :attr:`position` is an :class:`~kivy.properties.BoundedNumericProperty` and defaults to `0.0`.
+
+    :attr:`position` is an :class:`~kivy.properties.BoundedNumericProperty`
+    and defaults to `0.0`.
     '''
-    
+
     @property
     def _data(self):
         return self.position, *self.color
-    
+
     def __repr__(self):
         return f'<ColorStop(position={self.position}, color={self.color})>'
 
@@ -79,9 +84,10 @@ class ColorStop(EventDispatcher):
 class GradientBase(AnchorLayout):
     '''
     Base class for linear and radial gradients.
-    Do not use it directly; use a :class:`LinearGradient` or a :class:`RadialGradient`.
+    Do not use it directly; use a :class:`LinearGradient`
+    or a :class:`RadialGradient`.
     '''
-    
+
     _1d_gradient_texture = ObjectProperty()
 
     color_stops = ListProperty()
@@ -94,18 +100,20 @@ class GradientBase(AnchorLayout):
 
     :raises:
         ValueError: If the list length is greater than 1024.
-        TypeError: If the list contains anything other than :class:`ColorStop` objects.
+        TypeError: If the list contains anything other than
+        :class:`ColorStop` objects.
 
-    :attr:`color_stops` is a :class:`~kivy.properties.ListProperty` and is empty by default.
+    :attr:`color_stops` is a :class:`~kivy.properties.ListProperty`
+    and is empty by default.
     '''
 
     def __init__(self, **kwargs):
         self.fbind('color_stops', self._on_color_stops)
-        
+
         self._default_texture = Texture.create(size=(1, 1))
         self._default_texture.blit_buffer(b'\xff\xff\xff\xff')
         self._1d_gradient_texture = self._default_texture
-        
+
         super(AnchorLayout, self).__init__(**kwargs)
 
     def _on_color_stops(self, widget, stops):
@@ -119,8 +127,8 @@ class GradientBase(AnchorLayout):
                 c = s.__class__.__name__
                 raise TypeError(f'Expected ColorStop object, got {c} instead.')
         callback()
-        
-    def _update_mesh(self, *args):        
+
+    def _update_mesh(self, *args):
         stops = sorted(self.color_stops, key=lambda stop: stop.position)
 
         if not stops:
@@ -139,14 +147,14 @@ class GradientBase(AnchorLayout):
 
         self._1d_gradient_texture = self._render_texture(mesh)
 
-    def  _render_texture(self, mesh) -> Texture:
+    def _render_texture(self, mesh) -> Texture:
         fbo = Fbo(size=(1024, 1), vs=FBO_VERTEX_SHADER, fs=FBO_FRAGMENT_SHADER)
         with fbo:
             Mesh(
-                vertices = mesh,
-                indices = tuple(range(len(mesh) // 5)),
-                mode = 'line_strip',
-                fmt = [(b'vertexPos', 1, 'float'), (b'vertexColor', 4, 'float')]
+                vertices=mesh,
+                indices=tuple(range(len(mesh) // 5)),
+                mode='line_strip',
+                fmt=[(b'vertexPos', 1, 'float'), (b'vertexColor', 4, 'float')]
             )
         fbo.draw()
         return fbo.texture
