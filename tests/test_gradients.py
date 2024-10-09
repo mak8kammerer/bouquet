@@ -40,7 +40,7 @@ class GradientsTests(GraphicUnitTest):
         render(wid)
         
         default_texture = wid._default_texture
-        pixels = texture.pixels
+        pixels = default_texture.pixels
 
         self.assertEqual(default_texture.width, 1)
         self.assertEqual(default_texture.height, 1)
