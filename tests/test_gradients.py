@@ -39,16 +39,17 @@ class GradientsTests(GraphicUnitTest):
         wid = GradientBase()
         render(wid)
         
-        texture = wid._1d_gradient_texture
+        default_texture = wid._default_texture
         pixels = texture.pixels
 
-        self.assertEqual(texture.width, 1)
-        self.assertEqual(texture.height, 1)
+        self.assertEqual(default_texture.width, 1)
+        self.assertEqual(default_texture.height, 1)
 
         self.assertEqual(len(pixels), 4)
         self.assertEqual(pixels, b'\xff\xff\xff\xff')
-
-        self.assertEqual(texture, wid._default_texture)
+        
+        texture = wid._1d_gradient_texture
+        self.assertEqual(texture, default_texture)
 
         wid.color_stops = [
             ColorStop(position=0.0, color='black'),
