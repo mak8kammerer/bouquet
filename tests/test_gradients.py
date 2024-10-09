@@ -48,6 +48,8 @@ class GradientsTests(GraphicUnitTest):
         self.assertEqual(len(pixels), 4)
         self.assertEqual(pixels, b'\xff\xff\xff\xff')
 
+        self.assertEqual(texture, wid._default_texture)
+
         wid.color_stops = [
             ColorStop(position=0.0, color='black'),
             ColorStop(position=1.0, color='white')
