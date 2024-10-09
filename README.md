@@ -11,7 +11,7 @@ build modern and beautiful UI for your applications. Enjoy the experience!
 
 ## :doughnut: Features
 
-- [ ] Linear Gradient
+- [x] Linear Gradient
 - [x] Bilinear Gradient
 - [x] Radial Gradient
 - [ ] Conical Gradient
