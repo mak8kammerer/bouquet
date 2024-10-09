@@ -7,7 +7,7 @@ Base module for gradients with color stops.
 __all__ = ('ColorStop', 'GradientBase')
 
 from kivy.event import EventDispatcher
-from kivy.graphics import Fbo, Mesh
+from kivy.graphics import Fbo, Mesh, Canvas
 from kivy.graphics.texture import Texture
 from kivy.properties import ColorProperty, BoundedNumericProperty, \
                                 ListProperty, ObjectProperty
@@ -110,8 +110,9 @@ class GradientBase(AnchorLayout):
     def __init__(self, **kwargs):
         self.fbind('color_stops', self._on_color_stops)
 
-        self._default_texture = Texture.create(size=(1, 1))
-        self._default_texture.blit_buffer(b'\xff\xff\xff\xff')
+        self._default_texture = Texture.create(size=(2, 2))
+        self._default_texture.blit_buffer(b'\xff\xff\xff\xff' * 4)
+        # Canvas.ask_update(self)
         self._1d_gradient_texture = self._default_texture
 
         super(AnchorLayout, self).__init__(**kwargs)
