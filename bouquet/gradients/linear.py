@@ -68,12 +68,21 @@ void main() {
 
 class LinearGradient(GradientBase):
     '''
+    The LinearGradient class provides a way to create linear gradients in Kivy.
+
+    A linear gradient is a visual effect where color is linearly interpolated between multiple color stops (:class:`ColorStop`) across a straight line, known as the gradient line.
+    
+    .. seealso::
+        Note, a linear gradient is rendered as described in the [CSS specification](https://www.w3.org/TR/css-images-3/#linear-gradients).
     '''
     
     _y_uv = NumericProperty()
     
     angle = NumericProperty()
     '''
+    Defines the rotation of the gradient line in degrees. The angle determines the direction in which the gradient will be rendered, where 0 degrees represents a vertical gradient (from bottom to top), and 90 degrees represents a horizontal gradient (from left to right).
+    
+    :attr:`angle` is an :class:`~kivy.properties.NumericProperty` and defaults to `0`.
     '''
     
     @staticmethod

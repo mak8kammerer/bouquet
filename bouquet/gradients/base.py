@@ -64,7 +64,7 @@ class ColorStop(EventDispatcher):
         - 1.0 if the value is greater than 1.0
         - 0.0 if the value is less than 0.0
         
-    :attr:`position` is an :class:`~kivy.properties.BoundedNumericProperty`and defaults to `0.0`.
+    :attr:`position` is an :class:`~kivy.properties.BoundedNumericProperty` and defaults to `0.0`.
     '''
     
     @property
