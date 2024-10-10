@@ -1,6 +1,6 @@
 *no logo yet, sorry*
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/release/python-370/) [![Documentation Status](https://readthedocs.org/projects/bouquet-kivy/badge/?version=latest)](https://bouquet-kivy.readthedocs.io/en/latest/?badge=latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-380/) [![Documentation Status](https://readthedocs.org/projects/bouquet-kivy/badge/?version=latest)](https://bouquet-kivy.readthedocs.io/en/latest/?badge=latest)
 
 Welcome! :bouquet: **Bouquet** library is collection of awesome widgets
 and helpful tools for [Kivy framework](https://kivy.org). With it, you can
