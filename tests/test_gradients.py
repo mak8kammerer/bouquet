@@ -1,6 +1,25 @@
 # TODO: test transparency
 
+import os
+
+import pytest
+
 from kivy.tests.common import GraphicUnitTest
+
+
+is_github_actions = pytest.mark.skipif(
+    os.getenv("GITHUB_ACTIONS"),
+    reason='Skip texture tests on GitHub Actions'
+    # When running tests that interact with the Texture class on 
+    # GitHub Actions, strange errors occur. Example snippet:
+    #   from kivy.graphics.texture import Texture
+    #   texture = Texture.create(size=(1, 1))
+    #   texture.blit_buffer(b'\xff\xff\xff\xff')
+    #   self.assertEqual(texture.pixels, b'\xff\xff\xff\xff')
+    # Result:
+    #   AssertionError: b'\x00\x00\x00\x00' != b'\xff\xff\xff\xff'
+    # Therefore, we skip texture testing on GitHub Actions.
+)
 
 
 class GradientsTests(GraphicUnitTest):
@@ -29,16 +48,26 @@ class GradientsTests(GraphicUnitTest):
 
         repr_msg = '<ColorStop(position=0.5, color=[1.0, 0.0, 0.0, 1.0])>'
         self.assertEqual(repr(c), repr_msg)
-        
 
-    def test_gradient_base(self):
+    def test_gradient_base_widget(self):
         from bouquet.gradients import ColorStop
         from bouquet.gradients.base import GradientBase
 
-        render = self.render
+        wid = GradientBase()
+        self.render(wid)
+        
+        with self.assertRaises(ValueError):
+            wid.color_stops = [ColorStop() for _ in range(1025)]
+
+        with self.assertRaises(TypeError):
+            wid.color_stops = [1]
+
+    @is_github_actions
+    def test_gradient_base_texture(self):
+        from bouquet.gradients import ColorStop
+        from bouquet.gradients.base import GradientBase
 
         wid = GradientBase()
-        render(wid)
         
         default_texture = wid._default_texture
         pixels = default_texture.pixels
@@ -90,13 +119,7 @@ class GradientsTests(GraphicUnitTest):
         # 1.0 -> transparent red == transparent black
         self.assertEqual(pixels[-4:], b'\x00\x00\x00\x00')
 
-        with self.assertRaises(ValueError):
-            wid.color_stops = [ColorStop() for _ in range(1025)]
-
-        with self.assertRaises(TypeError):
-            wid.color_stops = [1]
-
-    def test_linear_gradient(self):
+    def test_linear_gradient_widget(self):
         from bouquet.gradients import ColorStop, LinearGradient
 
         render = self.render
@@ -111,17 +134,21 @@ class GradientsTests(GraphicUnitTest):
         wid.angle = -70
         render(wid)
 
+    @is_github_actions
+    def test_linear_gradient_texture(self):
+        from bouquet.gradients import ColorStop, LinearGradient
+
         texture = LinearGradient.render_texture()
         self.assertEqual(texture.size, (100, 100))
         self.assertEqual(len(texture.pixels), 4 * 100 * 100)
         self.assertEqual(texture.pixels, b'\xff\xff\xff\xff' * 100 * 100)
 
         texture = LinearGradient.render_texture(
-            color_stops=[ColorStop(color='red')], size=(50, 70)
+            color_stops=[ColorStop(color='red')], size=(256, 128)
         )
-        self.assertEqual(texture.size, (50, 70))
-        self.assertEqual(len(texture.pixels), 4 * 50 * 70)
-        self.assertEqual(texture.pixels, b'\xff\x00\x00\xff' * 70 * 50)
+        self.assertEqual(texture.size, (256, 128))
+        self.assertEqual(len(texture.pixels), 4 * 256 * 128)
+        self.assertEqual(texture.pixels, b'\xff\x00\x00\xff' * 256 * 128)
 
         # horizontal
         texture = LinearGradient.render_texture(
