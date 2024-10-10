@@ -10,7 +10,7 @@ from kivy.tests.common import GraphicUnitTest
 is_github_actions = pytest.mark.skipif(
     os.getenv('GITHUB_ACTIONS', default='false') == 'true',
     reason='Skip texture tests on GitHub Actions'
-    # When running tests that interact with the Texture class on 
+    # When running tests that interact with the Texture class on
     # GitHub Actions, strange errors occur. Example snippet:
     #   from kivy.graphics.texture import Texture
     #   texture = Texture.create(size=(1, 1))
@@ -55,7 +55,7 @@ class GradientsTests(GraphicUnitTest):
 
         wid = GradientBase()
         self.render(wid)
-        
+
         with self.assertRaises(ValueError):
             wid.color_stops = [ColorStop() for _ in range(1025)]
 
@@ -68,10 +68,10 @@ class GradientsTests(GraphicUnitTest):
         from bouquet.gradients.base import GradientBase
 
         wid = GradientBase()
-        
+
         default_texture = wid._default_texture
         pixels = default_texture.pixels
-        
+
         texture = wid._1d_gradient_texture
         self.assertEqual(texture, default_texture)
 
