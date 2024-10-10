@@ -12,9 +12,9 @@ build modern and beautiful UI for your applications. Enjoy the experience!
 ## :doughnut: Features
 
 - [x] Linear Gradient
+- [x] Bilinear Gradient
 - [x] Radial Gradient
-- [ ] List Gradient (like a linear gradient, but with multiple colors and stops)
-- [ ] Angular Gradient
+- [ ] Conical Gradient
 - [ ] Mesh Gradient
 - [ ] Blurs and noises
 - [ ] Animations (including 3D)
