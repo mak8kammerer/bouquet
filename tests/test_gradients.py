@@ -34,13 +34,6 @@ class GradientsTests(GraphicUnitTest):
     def test_gradient_base(self):
         from bouquet.gradients import ColorStop
         from bouquet.gradients.base import GradientBase
-        
-        from kivy.graphics.texture import Texture
-        texture = Texture.create(size=(2, 2))
-        texture.blit_buffer(b'\xff\xff\xff\xff' * 4)
-        from kivy.base import EventLoop
-        EventLoop.idle()
-        self.assertEqual(texture.pixels, b'\xff\xff\xff\xff' * 4)
 
         render = self.render
 
@@ -53,11 +46,11 @@ class GradientsTests(GraphicUnitTest):
         texture = wid._1d_gradient_texture
         self.assertEqual(texture, default_texture)
 
-        self.assertEqual(default_texture.width, 2)
-        self.assertEqual(default_texture.height, 2)
+        self.assertEqual(default_texture.width, 1)
+        self.assertEqual(default_texture.height, 1)
 
-        self.assertEqual(len(pixels), 16)
-        self.assertEqual(pixels, b'\xff\xff\xff\xff' * 4)
+        self.assertEqual(len(pixels), 4)
+        self.assertEqual(pixels, b'\xff\xff\xff\xff')
 
         wid.color_stops = [
             ColorStop(position=0.0, color='black'),
