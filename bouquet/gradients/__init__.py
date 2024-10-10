@@ -11,6 +11,8 @@ This is possible to use gradient textures with Vertex Instructions via the
 ``render_texture()`` function. You can take a look at code examples in the
 :ref:`Examples` section below.
 
+#TODO: Update docs; write about importing ColorStop in kv files.
+
 Examples
 ~~~~~~~~
 
@@ -124,7 +126,9 @@ Examples
     MyApp().run()
 '''
 
+from .base import ColorStop
+from .linear import LinearGradient
 from .bilinear import BilinearGradient
 from .radial import RadialGradient
 
-__all__ = ('BilinearGradient', 'RadialGradient', )
+__all__ = ('ColorStop', 'LinearGradient', 'BilinearGradient', 'RadialGradient')
