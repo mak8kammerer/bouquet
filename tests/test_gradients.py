@@ -33,6 +33,11 @@ class GradientsTests(GraphicUnitTest):
     def test_gradient_base(self):
         from bouquet.gradients import ColorStop
         from bouquet.gradients.base import GradientBase
+        
+        from kivy.graphics.texture import Texture
+        texture = Texture.create(size=(2, 2))
+        texture.blit_buffer(b'\xff\xff\xff\xff' * 4)
+        self.assertEqual(texture.pixels, b'\xff\xff\xff\xff' * 4)
 
         render = self.render
 
