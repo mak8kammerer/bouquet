@@ -9,7 +9,7 @@ is_github_actions = pytest.mark.skipif(
     os.getenv('GITHUB_ACTIONS', default='false') == 'true',
     reason='Skip texture tests on GitHub Actions'
     # When running tests that interact with the Texture class on
-    # GitHub Actions, strange errors occur. Example snippet:
+    # GitHub Actions, strange error occur. Example snippet:
     #   from kivy.graphics.texture import Texture
     #   texture = Texture.create(size=(1, 1))
     #   texture.blit_buffer(b'\xff\xff\xff\xff')
