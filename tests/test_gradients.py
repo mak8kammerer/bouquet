@@ -143,8 +143,15 @@ class GradientsTests(GraphicUnitTest):
         self.assertEqual(len(texture.pixels), 4 * 100 * 100)
         self.assertEqual(texture.pixels, b'\xff\xff\xff\xff' * 100 * 100)
 
+        texture = LinearGradient.render_texture(width=64)
+        self.assertEqual(texture.size, (64, 100))
+
+        texture = LinearGradient.render_texture(height=128)
+        self.assertEqual(texture.size, (100, 128))
+
         texture = LinearGradient.render_texture(
-            color_stops=[ColorStop(color='red')], size=(256, 128)
+            color_stops=[ColorStop(color='red')],
+            width=256, height=128
         )
         self.assertEqual(texture.size, (256, 128))
         self.assertEqual(len(texture.pixels), 4 * 256 * 128)
@@ -190,6 +197,12 @@ class GradientsTests(GraphicUnitTest):
         texture = BilinearGradient.render_texture()
         self.assertEqual(texture.size, (100, 100))
 
+        texture = BilinearGradient.render_texture(width=128)
+        self.assertEqual(texture.size, (128, 100))
+
+        texture = BilinearGradient.render_texture(height=256)
+        self.assertEqual(texture.size, (100, 256))
+
         tex_size = (500, 600)
         texture = BilinearGradient.render_texture(
             size=tex_size,
@@ -219,6 +232,12 @@ class GradientsTests(GraphicUnitTest):
 
         texture = RadialGradient.render_texture()
         self.assertEqual(texture.size, (100, 100))
+
+        texture = RadialGradient.render_texture(width=32)
+        self.assertEqual(texture.size, (32, 100))
+
+        texture = RadialGradient.render_texture(height=512)
+        self.assertEqual(texture.size, (100, 512))
 
         tex_size = (500, 500)
         texture = RadialGradient.render_texture(

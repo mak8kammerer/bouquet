@@ -101,12 +101,18 @@ class LinearGradient(GradientBase):
         :param kwargs:
             Any :class:`LinearGradient` properties.
         '''
-        # FIXME: be aware of width and height arguments
-        width, height = kwargs.setdefault('size', (100, 100))
+        width = kwargs.pop('width', 100)
+        height = kwargs.pop('height', 100)
+        width, height = kwargs.pop('size', (width, height))
+
         fbo = Fbo(size=(width, height))
         with fbo:
             # _y_uv is not calculated automatically
-            LinearGradient(_y_uv=(height / width), **kwargs).canvas
+            LinearGradient(
+                _y_uv=(height / width),
+                size=(width, height),
+                **kwargs
+            ).canvas
         fbo.draw()
         return fbo.texture
 

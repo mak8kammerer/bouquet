@@ -94,9 +94,13 @@ class BilinearGradient(AnchorLayout):
         :param kwargs:
             Any :class:`BilinearGradient` properties.
         '''
-        fbo = Fbo(size=kwargs.get('size', (100, 100)))
+        width = kwargs.pop('width', 100)
+        height = kwargs.pop('height', 100)
+        width, height = kwargs.pop('size', (width, height))
+
+        fbo = Fbo(size=(width, height))
         with fbo:
-            BilinearGradient(**kwargs).canvas
+            BilinearGradient(size=(width, height), **kwargs).canvas
         fbo.draw()
         return fbo.texture
 

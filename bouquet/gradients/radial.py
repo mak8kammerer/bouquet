@@ -76,9 +76,13 @@ class RadialGradient(Widget):
         :param kwargs:
             Any :class:`RadialGradient` properties.
         '''
-        fbo = Fbo(size=kwargs.get('size', (100, 100)))
+        width = kwargs.pop('width', 100)
+        height = kwargs.pop('height', 100)
+        width, height = kwargs.pop('size', (width, height))
+
+        fbo = Fbo(size=(width, height))
         with fbo:
-            RadialGradient(**kwargs).canvas
+            RadialGradient(size=(width, height), **kwargs).canvas
         fbo.draw()
         return fbo.texture
 
