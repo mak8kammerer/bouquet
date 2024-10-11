@@ -1,3 +1,5 @@
+# TODO: Update docs; write about importing ColorStop in kv files.
+
 '''
 ``bouquet.gradients`` module provides various types of gradients.
 Currently, only bilinear (:class:`BilinearGradient`) and radial
@@ -8,10 +10,8 @@ How to use gradients with Vertex Instructions?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is possible to use gradient textures with Vertex Instructions via the
-``render_texture()`` function. You can take a look at code examples in the
-:ref:`Examples` section below.
-
-#TODO: Update docs; write about importing ColorStop in kv files.
+``***Gradient.render_texture()`` function. You can take a look at code examples
+in the :ref:`Examples` section below.
 
 Examples
 ~~~~~~~~

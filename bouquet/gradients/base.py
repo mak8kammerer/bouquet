@@ -66,8 +66,10 @@ class ColorStop(EventDispatcher):
     The position of the color stop. The value should be in the range from 0.0
     (start; one edge of gradient) to 1.0 (end; another edge of gradient).
     If the value exceeds the bounds, it will be set to:
-        - 1.0 if the value is greater than 1.0
-        - 0.0 if the value is less than 0.0
+
+    - 1.0 if the value is greater than 1.0;
+
+    - 0.0 if the value is less than 0.0.
 
     :attr:`position` is an :class:`~kivy.properties.BoundedNumericProperty`
     and defaults to `0.0`.
@@ -83,9 +85,14 @@ class ColorStop(EventDispatcher):
 
 class GradientBase(AnchorLayout):
     '''
-    Base class for linear and radial gradients.
-    Do not use it directly; use a :class:`LinearGradient`
-    or a :class:`RadialGradient`.
+    Base class for linear and radial gradients. Do not use it directly; use
+    a :class:`~bouquet.gradients.LinearGradient` or
+    a :class:`~bouquet.gradients.RadialGradient`.
+
+    .. hint::
+        :class:`GradientBase` is an
+        :class:`~kivy.uix.anchorlayout.AnchorLayout`
+        subclass, so you can put any widget inside it.
     '''
 
     _1d_gradient_texture = ObjectProperty()
@@ -98,9 +105,8 @@ class GradientBase(AnchorLayout):
     .. warning::
         bouquet gradients supports up to 1024 color stops.
 
-    :raises:
-        ValueError: If the list length is greater than 1024.
-        TypeError: If the list contains anything other than
+    :raises ValueError: If the list length is greater than 1024.
+    :raises TypeError: If the list contains anything other than
         :class:`ColorStop` objects.
 
     :attr:`color_stops` is a :class:`~kivy.properties.ListProperty`

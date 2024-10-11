@@ -49,7 +49,6 @@ class BilinearGradient(AnchorLayout):
     for each corner.
 
     .. hint::
-
         :class:`BilinearGradient` is an
         :class:`~kivy.uix.anchorlayout.AnchorLayout`
         subclass, so you can put any widget inside it.

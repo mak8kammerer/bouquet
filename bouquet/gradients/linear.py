@@ -76,8 +76,8 @@ class LinearGradient(GradientBase):
 
     .. seealso::
         Note, a linear gradient is rendered as described in the
-        [CSS specification]
-        (https://www.w3.org/TR/css-images-3/#linear-gradients).
+        `CSS specification
+        <https://www.w3.org/TR/css-images-3/#linear-gradients>`_.
     '''
 
     _y_uv = NumericProperty()
