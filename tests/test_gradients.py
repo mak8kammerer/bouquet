@@ -1,5 +1,3 @@
-# TODO: test transparency
-
 import os
 
 import pytest
@@ -82,6 +80,18 @@ class GradientsTests(GraphicUnitTest):
         self.assertEqual(pixels, b'\xff\xff\xff\xff')
 
         wid.color_stops = [
+            ColorStop(color=(0.0, 1.0, 0.5, 0.25))
+        ]
+        texture = wid._1d_gradient_texture
+        pixels = texture.pixels
+
+        self.assertEqual(texture.height, 1)
+        self.assertEqual(texture.width, 1024)
+
+        self.assertEqual(len(pixels), 4 * 1024)
+        self.assertEqual(pixels, b'\x00\xff\x80@' * 1024)   # (0, 255, 128, 64)
+
+        wid.color_stops = [
             ColorStop(position=0.0, color='black'),
             ColorStop(position=1.0, color='white')
         ]
@@ -114,10 +124,10 @@ class GradientsTests(GraphicUnitTest):
         self.assertEqual(pixels[:4], b'\x00\x00\xff\xff')
         # 0.25 -> opaque blue
         self.assertEqual(pixels[4 * 256: 4 * 257], b'\x00\x00\xff\xff')
-        # 0.75 -> transparent red == transparent black
-        self.assertEqual(pixels[4 * 768: 4 * 769], b'\x00\x00\x00\x00')
-        # 1.0 -> transparent red == transparent black
-        self.assertEqual(pixels[-4:], b'\x00\x00\x00\x00')
+        # 0.75 -> transparent red
+        self.assertEqual(pixels[4 * 768: 4 * 769], b'\xff\x00\x00\x00')
+        # 1.0 -> transparent red
+        self.assertEqual(pixels[-4:], b'\xff\x00\x00\x00')
 
     def test_linear_gradient_widget(self):
         from bouquet.gradients import ColorStop, LinearGradient
