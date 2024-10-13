@@ -1,7 +1,6 @@
 '''
 Base module for gradients with color stops.
 '''
-# TODO: optimizations
 
 __all__ = ('ColorStop', 'GradientBase')
 
@@ -142,14 +141,20 @@ class GradientBase(AnchorLayout):
         if not stops:
             self._1d_gradient_texture = self._default_texture
             return
+        elif len(stops) == 1:
+            color = stops[0].color
+            stops = [
+                ColorStop(position=0.0, color=color),
+                ColorStop(position=1.0, color=color)
+            ]
+        else:
+            first_stop = stops[0]
+            if first_stop.position != 0.0:
+                stops.insert(0, ColorStop(position=0.0, color=first_stop.color))
 
-        first_stop = stops[0]
-        if first_stop.position != 0.0:
-            stops.insert(0, ColorStop(position=0.0, color=first_stop.color))
-
-        last_stop = stops[-1]
-        if last_stop.position != 1.0:
-            stops.append(ColorStop(position=1.0, color=last_stop.color))
+            last_stop = stops[-1]
+            if last_stop.position != 1.0:
+                stops.append(ColorStop(position=1.0, color=last_stop.color))
 
         mesh = [i for stop in stops for i in stop._data]
 
