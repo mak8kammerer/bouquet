@@ -228,17 +228,46 @@ class GradientsTests(GraphicUnitTest):
         # top right corner -> yellow
         self.assertEqual(pixels[-4:], b'\xff\xff\x00\xff')
 
-    def test_radial_gradient(self):
-        from kivy.graphics.fbo import Fbo
-        from bouquet.gradients import RadialGradient
+    def test_radial_gradient_widget(self):
+        from bouquet.gradients import ColorStop, RadialGradient
 
         render = self.render
 
         wid = RadialGradient()
         render(wid)
 
-        wid.border_color = '#ff0000'
+        wid.color_stops = [ColorStop(color='purple')]
         render(wid)
+
+        wid.color_stops = [ColorStop(position=0.66)]
+        render(wid)
+
+        wid.color_stops[0].position = 0.25
+        wid.color_stops[0].color = (1.0, 0.0, 0.25, 0.8)
+        render(wid)
+
+        wid.color_stops = [
+            ColorStop(position=0.0, color='pink'),
+            ColorStop(position=1.0, color='blue')
+        ]
+        render(wid)
+
+        wid.color_stops = [
+            ColorStop(position=0.3, color=(1.0, 0.0, 0.5, 1.0)),
+            ColorStop(position=0.8, color=(0.8, 1.0, 0.3, 0.9))
+        ]
+        render(wid)
+
+        wid.color_stops = [
+            ColorStop(position=0.0, color='orange'),
+            ColorStop(position=0.5, color='yellow'),
+            ColorStop(position=1.0, color='red')
+        ]
+        render(wid)
+
+    @is_github_actions
+    def test_radial_gradient_texture(self):
+        from bouquet.gradients import ColorStop, RadialGradient
 
         texture = RadialGradient.render_texture()
         self.assertEqual(texture.size, (100, 100))
@@ -249,16 +278,37 @@ class GradientsTests(GraphicUnitTest):
         texture = RadialGradient.render_texture(height=512)
         self.assertEqual(texture.size, (100, 512))
 
-        tex_size = (500, 500)
+        texture = RadialGradient.render_texture()
+        self.assertEqual(texture.size, (100, 100))
+        self.assertEqual(len(texture.pixels), 4 * 100 * 100)
+        self.assertEqual(texture.pixels, b'\xff\xff\xff\xff' * 100 * 100)
+
         texture = RadialGradient.render_texture(
-            size=tex_size,
-            border_color='#00000000'
+            color_stops=[ColorStop(position=0.5, color='yellow')],
+            width=256, height=128
         )
-        self.assertEqual(texture.size, tex_size)
+        self.assertEqual(texture.size, (256, 128))
+        self.assertEqual(len(texture.pixels), 4 * 256 * 128)
+        self.assertEqual(texture.pixels, b'\xff\xff\x00\xff' * 256 * 128)
 
-        pixels = texture.pixels
-        self.assertEqual(len(pixels), tex_size[0] * tex_size[1] * 4)
+        texture = RadialGradient.render_texture(
+            color_stops=[
+                ColorStop(position=0.0, color='red'),
+                ColorStop(position=0.5, color='yellow'),
+                ColorStop(position=1.0, color='white')
+            ],
+            height=1, width=2000
+        )
+        self.assertEqual(texture.size, (2000, 1))
+        self.assertEqual(len(texture.pixels), 4 * 2000 * 1)
 
-        # bottom left corner -> transparent black
-        self.assertEqual(pixels[:4], b'\x00\x00\x00\x00')
-        # TODO: test center_color here
+        # 0.0 -> white -> (255, 255, 255, 255)
+        self.assertEqual(texture.pixels[:4], b'\xff\xff\xff\xff')
+        # 0.5 -> yellow -> (255, 255, 0, 255)
+        self.assertEqual(texture.pixels[499 * 4:500 * 4], b'\xff\xff\x00\xff')
+        # 1.0 -> red -> (255, 0, 0, 255)
+        self.assertEqual(texture.pixels[999 * 4:1000 * 4], b'\xff\x00\x00\xff')
+        # 0.5 -> yellow -> (255, 255, 0, 255)
+        self.assertEqual(texture.pixels[1499 * 4:1500 * 4], b'\xff\xff\x00\xff')
+        # 0.0 -> white -> (255, 255, 255, 255)
+        self.assertEqual(texture.pixels[-4:], b'\xff\xff\xff\xff')
