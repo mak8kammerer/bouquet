@@ -44,8 +44,15 @@ void main() {
 
 class RadialGradient(GradientBase):
     '''
-    Widget for creating a radial gradient effect, in which color is linearly
-    interpolated from the center to the edges of the widget.
+    The RadialGradient class provides a way to create radial gradients in Kivy.
+
+    A radial gradient is a visual effect where color is linearly interpolated
+    between multiple color stops (:class:`ColorStop`) from the center to the
+    border.
+
+    .. hint::
+        The value 0.0 of :attr:`ColorStop.position` represents the center,
+        while 1.0 represents the border.
     '''
 
     @staticmethod
