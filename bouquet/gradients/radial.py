@@ -6,7 +6,6 @@ __all__ = ('RadialGradient', )
 
 from kivy.lang import Builder
 from kivy.factory import Factory
-from kivy.uix.widget import Widget
 from kivy.graphics import RenderContext, Fbo
 from kivy.graphics.texture import Texture
 
