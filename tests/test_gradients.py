@@ -66,16 +66,12 @@ class GradientsTests(GraphicUnitTest):
         from bouquet.gradients.base import GradientBase
 
         wid = GradientBase()
-
         default_texture = wid._default_texture
         pixels = default_texture.pixels
-
         texture = wid._1d_gradient_texture
         self.assertEqual(texture, default_texture)
-
         self.assertEqual(default_texture.width, 1)
         self.assertEqual(default_texture.height, 1)
-
         self.assertEqual(len(pixels), 4)
         self.assertEqual(pixels, b'\xff\xff\xff\xff')
 
@@ -84,10 +80,8 @@ class GradientsTests(GraphicUnitTest):
         ]
         texture = wid._1d_gradient_texture
         pixels = texture.pixels
-
         self.assertEqual(texture.height, 1)
         self.assertEqual(texture.width, 1024)
-
         self.assertEqual(len(pixels), 4 * 1024)
         self.assertEqual(pixels, b'\x00\xff\x80@' * 1024)   # (0, 255, 128, 64)
 
@@ -97,36 +91,33 @@ class GradientsTests(GraphicUnitTest):
         ]
         texture = wid._1d_gradient_texture
         pixels = texture.pixels
-
         self.assertEqual(texture.height, 1)
         self.assertEqual(texture.width, 1024)
-
         self.assertEqual(len(pixels), 4 * 1024)
         # 0.0 -> right -> black
         self.assertEqual(pixels[:4], b'\x00\x00\x00\xff')
         # 0.5 -> middle -> gray
-        self.assertEqual(pixels[4 * 512: 4 * 513], b'\x80\x80\x80\xff')
+        self.assertEqual(pixels[4 * 512:4 * 513], b'\x80\x80\x80\xff')
         # 1.0 -> left -> white
         self.assertEqual(pixels[-4:], b'\xff\xff\xff\xff')
 
+        # alpha blending test
         wid.color_stops = [
             ColorStop(position=0.75, color=[1.0, 0.0, 0.0, 0.0]),
             ColorStop(position=0.25, color=[0.0, 0.0, 1.0, 1.0])
         ]
         texture = wid._1d_gradient_texture
         pixels = texture.pixels
-
         self.assertEqual(texture.height, 1)
         self.assertEqual(texture.width, 1024)
-
         self.assertEqual(len(pixels), 4 * 1024)
-        # 0.0 -> opaque blue
+        # 0.0 -> opaque blue -> (0, 0, 255, 255)
         self.assertEqual(pixels[:4], b'\x00\x00\xff\xff')
-        # 0.25 -> opaque blue
-        self.assertEqual(pixels[4 * 256: 4 * 257], b'\x00\x00\xff\xff')
-        # 0.75 -> transparent red
-        self.assertEqual(pixels[4 * 768: 4 * 769], b'\xff\x00\x00\x00')
-        # 1.0 -> transparent red
+        # 0.25 -> opaque blue -> (0, 0, 255, 255)
+        self.assertEqual(pixels[4 * 256:4 * 257], b'\x00\x00\xff\xff')
+        # 0.75 -> transparent red -> (255, 0, 0, 0)
+        self.assertEqual(pixels[4 * 768:4 * 769], b'\xff\x00\x00\x00')
+        # 1.0 -> transparent red -> (255, 0, 0, 0)
         self.assertEqual(pixels[-4:], b'\xff\x00\x00\x00')
 
     def test_linear_gradient_widget(self):
@@ -167,7 +158,25 @@ class GradientsTests(GraphicUnitTest):
         self.assertEqual(len(texture.pixels), 4 * 256 * 128)
         self.assertEqual(texture.pixels, b'\xff\x00\x00\xff' * 256 * 128)
 
-        # horizontal
+        # rotation test
+        color_stops = [
+            ColorStop(position=0.3, color='red'),
+            ColorStop(position=0.6, color='blue'),
+            ColorStop(position=1.0, color='white')
+        ]
+        horizontal = LinearGradient.render_texture(
+            color_stops=color_stops, width=1, height=1000
+        )
+        vertical = LinearGradient.render_texture(
+            color_stops=color_stops, size=(1000, 1), angle=90
+        )
+        self.assertEqual(horizontal.size, (1, 1000))
+        self.assertEqual(vertical.width, 1000)
+        self.assertEqual(vertical.height, 1)
+        self.assertEqual(len(horizontal.pixels), len(vertical.pixels))
+        self.assertEqual(horizontal.pixels, vertical.pixels)
+
+        # test blending (horizontal)
         texture = LinearGradient.render_texture(
             color_stops=[
                 ColorStop(color='red'),
@@ -177,10 +186,10 @@ class GradientsTests(GraphicUnitTest):
         )
         self.assertEqual(texture.size, (1, 3))
         self.assertEqual(len(texture.pixels), 4 * 1 * 3)
-        color = b'\x80\x00\x00\xff'  # (128, 0, 0, 255)
-        self.assertEqual(texture.pixels[4:8], color)
+        # 0.5 -> marron -> (128, 0, 0, 255)
+        self.assertEqual(texture.pixels[4:8], b'\x80\x00\x00\xff')
 
-        # vertical
+        # test blending (vertical)
         texture = LinearGradient.render_texture(
             color_stops=[
                 ColorStop(color='#ffffff'),
@@ -190,8 +199,28 @@ class GradientsTests(GraphicUnitTest):
         )
         self.assertEqual(texture.size, (3, 1))
         self.assertEqual(len(texture.pixels), 4 * 3 * 1)
-        color = b'\xff\x80\xff\xff'  # (255, 128, 255, 255)
-        self.assertEqual(texture.pixels[4:8], color)
+        # 0.5 -> light fuchsia -> (255, 128, 255, 255)
+        self.assertEqual(texture.pixels[4:8], b'\xff\x80\xff\xff')
+
+        # alpha blending test
+        texture = LinearGradient.render_texture(
+            color_stops=[
+                ColorStop(position=0.75, color=[1.0, 0.0, 0.0, 0.0]),
+                ColorStop(position=0.25, color=[0.0, 0.0, 1.0, 1.0])
+            ],
+            width=1000, height=1, angle=90
+        )
+        self.assertEqual(texture.height, 1)
+        self.assertEqual(texture.width, 1000)
+        self.assertEqual(len(texture.pixels), 4 * 1000 * 1)
+        # 0.0 -> opaque blue -> (0, 0, 255, 255)
+        self.assertEqual(texture.pixels[:4], b'\x00\x00\xff\xff')
+        # 0.25 -> opaque blue -> (0, 0, 255, 255)
+        self.assertEqual(texture.pixels[4 * 249:4 * 250], b'\x00\x00\xff\xff')
+        # 0.75 -> transparent red -> (255, 0, 0, 0)
+        self.assertEqual(texture.pixels[4 * 749:4 * 750], b'\xff\x00\x00\x00')
+        # # 1.0 -> transparent red -> (255, 0, 0, 0)
+        self.assertEqual(texture.pixels[-4:], b'\xff\x00\x00\x00')
 
     def test_bilinear_gradient(self):
         from bouquet.gradients import BilinearGradient
@@ -204,6 +233,11 @@ class GradientsTests(GraphicUnitTest):
         wid.bottom_left_color = '#ff0000'
         render(wid)
 
+        wid.bottom_right_color = '#ff00ff'
+        wid.top_left_color = '#ffff00'
+        wid.top_right_color = '#ffffff'
+        render(wid)
+
         texture = BilinearGradient.render_texture()
         self.assertEqual(texture.size, (100, 100))
 
@@ -213,20 +247,32 @@ class GradientsTests(GraphicUnitTest):
         texture = BilinearGradient.render_texture(height=256)
         self.assertEqual(texture.size, (100, 256))
 
-        tex_size = (500, 600)
         texture = BilinearGradient.render_texture(
-            size=tex_size,
-            bottom_left_color='#00000000'
+            width=400, height=600,
+            bottom_left_color='#ff0000',
+            bottom_right_color='#ff0000ff',
+            top_left_color=[1.0, 0.0, 0.0],
+            top_right_color=(1.0, 0.0, 0.0, 1.0)
         )
-        self.assertEqual(texture.size, tex_size)
+        self.assertEqual(texture.width, 400)
+        self.assertEqual(texture.height, 600)
+        self.assertEqual(len(texture.pixels), 4 * 400 * 600)
+        self.assertEqual(texture.pixels, b'\xff\x00\x00\xff' * 400 * 600)
 
-        pixels = texture.pixels
-        self.assertEqual(len(pixels), tex_size[0] * tex_size[1] * 4)
-
-        # bottom left corner -> transparent black
-        self.assertEqual(pixels[:4], b'\x00\x00\x00\x00')
-        # top right corner -> yellow
-        self.assertEqual(pixels[-4:], b'\xff\xff\x00\xff')
+        # alpha blending test
+        texture = BilinearGradient.render_texture(
+            bottom_left_color='red',
+            bottom_right_color='red',
+            top_left_color='#0000ff00',
+            top_right_color='#0000ff00',
+            width=1000, height=1000
+        )
+        self.assertEqual(texture.size, (1000, 1000))
+        self.assertEqual(len(texture.pixels), 4 * 1000 * 1000)
+        # top -> opaque red -> (255, 0, 0, 255)
+        self.assertEqual(texture.pixels[:1000 * 4], b'\xff\x00\x00\xff' * 1000)
+        # bottom -> transparent blue -> (0, 0, 255, 0)
+        self.assertEqual(texture.pixels[-1000 * 4:], b'\x00\x00\xff\x00' * 1000)
 
     def test_radial_gradient_widget(self):
         from bouquet.gradients import ColorStop, RadialGradient
@@ -301,7 +347,6 @@ class GradientsTests(GraphicUnitTest):
         )
         self.assertEqual(texture.size, (2000, 1))
         self.assertEqual(len(texture.pixels), 4 * 2000 * 1)
-
         # 0.0 -> white -> (255, 255, 255, 255)
         self.assertEqual(texture.pixels[:4], b'\xff\xff\xff\xff')
         # 0.5 -> yellow -> (255, 255, 0, 255)
@@ -312,3 +357,29 @@ class GradientsTests(GraphicUnitTest):
         self.assertEqual(texture.pixels[1499 * 4:1500 * 4], b'\xff\xff\x00\xff')
         # 0.0 -> white -> (255, 255, 255, 255)
         self.assertEqual(texture.pixels[-4:], b'\xff\xff\xff\xff')
+
+        # alpha blending test
+        texture = RadialGradient.render_texture(
+            color_stops=[
+                ColorStop(position=0.75, color=[1.0, 0.0, 0.0, 0.0]),
+                ColorStop(position=0.25, color=[0.0, 0.0, 1.0, 1.0])
+            ],
+            width=2000, height=1
+        )
+        self.assertEqual(texture.height, 1)
+        self.assertEqual(texture.width, 2000)
+        self.assertEqual(len(texture.pixels), 4 * 2000 * 1)
+        # 0.0 -> transparent red -> (255, 0, 0, 0)
+        self.assertEqual(texture.pixels[:4], b'\xff\x00\x00\x00')
+        # 0.25 -> transparent red -> (255, 0, 0, 0)
+        self.assertEqual(texture.pixels[4 * 249:4 * 250], b'\xff\x00\x00\x00')
+        # 0.75 -> opaque blue -> (0, 0, 255, 255)
+        self.assertEqual(texture.pixels[4 * 749:4 * 750], b'\x00\x00\xff\xff')
+        # 1.0 -> opaque blue -> (0, 0, 255, 255)
+        self.assertEqual(texture.pixels[4 * 999:4 * 1000], b'\x00\x00\xff\xff')
+        # 0.75 -> opaque blue -> (0, 0, 255, 255)
+        self.assertEqual(texture.pixels[4 * 1249:4 * 1250], b'\x00\x00\xff\xff')
+        # 0.25 -> transparent red -> (255, 0, 0, 0)
+        self.assertEqual(texture.pixels[4 * 1749:4 * 1750], b'\xff\x00\x00\x00')
+        # 0.0 -> transparent red -> (255, 0, 0, 0)
+        self.assertEqual(texture.pixels[-4:], b'\xff\x00\x00\x00')

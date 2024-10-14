@@ -7,7 +7,11 @@ __all__ = ('BilinearGradient', )
 
 from kivy.lang import Builder
 from kivy.factory import Factory
-from kivy.graphics import RenderContext, Fbo
+from kivy.graphics import Callback, RenderContext
+from kivy.graphics.fbo import Fbo
+from kivy.graphics.opengl import glBlendFunc, glBlendFuncSeparate, \
+                                    GL_ZERO, GL_ONE_MINUS_SRC_ALPHA, \
+                                    GL_SRC_ALPHA, GL_ONE
 from kivy.graphics.texture import Texture
 from kivy.properties import ColorProperty
 from kivy.uix.anchorlayout import AnchorLayout
@@ -100,7 +104,15 @@ class BilinearGradient(AnchorLayout):
 
         fbo = Fbo(size=(width, height))
         with fbo:
+            Callback(
+                lambda arg: glBlendFunc(GL_ONE, GL_ZERO)
+            )
             BilinearGradient(size=(width, height), **kwargs).canvas
+            Callback(
+                lambda arg: glBlendFuncSeparate(
+                    GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE
+                )
+            )
         fbo.draw()
         return fbo.texture
 

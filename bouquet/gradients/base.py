@@ -5,7 +5,8 @@ Base module for gradients with color stops.
 __all__ = ('ColorStop', 'GradientBase')
 
 from kivy.event import EventDispatcher
-from kivy.graphics import Callback, Fbo, Mesh
+from kivy.graphics import Callback, Mesh
+from kivy.graphics.fbo import Fbo
 from kivy.graphics.opengl import glBlendFunc, glBlendFuncSeparate, \
                                     GL_ZERO, GL_ONE_MINUS_SRC_ALPHA, \
                                     GL_SRC_ALPHA, GL_ONE
@@ -163,7 +164,9 @@ class GradientBase(AnchorLayout):
     def _render_texture(self, mesh) -> Texture:
         fbo = Fbo(size=(1024, 1), vs=FBO_VERTEX_SHADER, fs=FBO_FRAGMENT_SHADER)
         with fbo:
-            Callback(lambda arg: glBlendFunc(GL_ONE, GL_ZERO))
+            Callback(
+                lambda arg: glBlendFunc(GL_ONE, GL_ZERO)
+            )
             Mesh(
                 vertices=mesh,
                 indices=tuple(range(len(mesh) // 5)),
