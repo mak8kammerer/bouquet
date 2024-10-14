@@ -1,6 +1,7 @@
 '''
 Base module for radial gradient.
 '''
+# TODO: add `radius` property
 
 __all__ = ('RadialGradient', )
 
