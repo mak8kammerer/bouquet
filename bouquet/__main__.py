@@ -1,9 +1,39 @@
-# TODO: reorganize
+import webbrowser
 
 from kivy.lang import Builder
 from kivy.app import runTouchApp
+from kivy.uix.label import Label
+from kivy.properties import StringProperty
 
 from bouquet.gradients import *
+
+
+DOCS_LINK = 'https://bouquet-kivy.readthedocs.io/en/latest/gradients.html'
+LINKS = {
+    'linear_gradient':
+        DOCS_LINK + '#bouquet.gradients.LinearGradient',
+    'linear_gradient_render_texture':
+        DOCS_LINK + '#bouquet.gradients.LinearGradient.render_texture',
+    'radial_gradient':
+        DOCS_LINK + '#bouquet.gradients.RadialGradient',
+    'radial_gradient_render_texture':
+        DOCS_LINK + '#bouquet.gradients.RadialGradient.render_texture',
+    'bilinear_gradient':
+        DOCS_LINK + '#bouquet.gradients.BilinearGradient',
+    'bilinear_gradient_render_texture':
+        DOCS_LINK + '#bouquet.gradients.BilinearGradient.render_texture'
+}
+
+
+class Caption(Label):
+    ref = StringProperty()
+    label = StringProperty()
+
+    def on_ref_press(self, ref: str):
+        link = LINKS.get(ref)
+        if link:
+            webbrowser.open(link)
+
 
 KV = '''
 #: import window kivy.core.window.Window
@@ -12,28 +42,11 @@ KV = '''
 #: import radial_gradient bouquet.gradients.RadialGradient
 #: import bilinear_gradient bouquet.gradients.BilinearGradient
 
-#: import open_link webbrowser.open
-#: set ref_start '[color=#00a8f3][ref=ref]'
-#: set ref_end '[/ref][/color]'
-#: set gradient_docs \
-        'https://bouquet-kivy.readthedocs.io/en/latest/gradients.html'
-#: set linear_gradient_link \
-        gradient_docs + '#bouquet.gradients.LinearGradient'
-#: set linear_gradient_render_texture_link \
-        gradient_docs + '#bouquet.gradients.LinearGradient.render_texture'
-#: set radial_gradient_link \
-        gradient_docs + '#bouquet.gradients.RadialGradient'
-#: set radial_gradient_render_texture_link \
-        gradient_docs + '#bouquet.gradients.RadialGradient.render_texture'
-#: set bilinear_gradient_link \
-        gradient_docs + '#bouquet.gradients.BilinearGradient'
-#: set bilinear_gradient_render_texture_link \
-        gradient_docs + '#bouquet.gradients.BilinearGradient.render_texture'
-
-<Caption@Label>:
-    markup: True
+<Caption>:
     size_hint_y: None
     height: self.texture_size[1]
+    markup: True
+    text: f'[color=#00a8f3][ref={self.ref}]{self.label}[/ref][/color]'
 
 BoxLayout:
     orientation: 'vertical'
@@ -72,12 +85,11 @@ BoxLayout:
                             angle=45 \
                         )
             Caption:
-                text: ref_start + 'LinearGradient widget' + ref_end
-                on_ref_press: open_link(linear_gradient_link)
+                ref: 'linear_gradient'
+                label: 'LinearGradient widget'
             Caption:
-                text: ref_start + 'LinearGradient.render_texture() method' \
-                                                                    + ref_end
-                on_ref_press: open_link(linear_gradient_render_texture_link)
+                ref: 'linear_gradient_render_texture'
+                label: 'LinearGradient.render_texture() method'
             RadialGradient:
                 size_hint_y: None
                 height: window.height / 2
@@ -104,12 +116,11 @@ BoxLayout:
                             ] \
                         )
             Caption:
-                text: ref_start + 'RadialGradient widget' + ref_end
-                on_ref_press: open_link(radial_gradient_link)
+                ref: 'radial_gradient'
+                label: 'RadialGradient widget'
             Caption:
-                text: ref_start + 'RadialGradient.render_texture() method' \
-                                                                    + ref_end
-                on_ref_press: open_link(radial_gradient_render_texture_link)
+                ref: 'radial_gradient_render_texture'
+                label: 'RadialGradient.render_texture() method'
             BilinearGradient:
                 size_hint_y: None
                 height: window.height / 2
@@ -128,12 +139,11 @@ BoxLayout:
                             size=self.size \
                         )
             Caption:
-                text: ref_start + 'BilinearGradient widget' + ref_end
-                on_ref_press: open_link(bilinear_gradient_link)
+                ref: 'bilinear_gradient'
+                label: 'BilinearGradient widget'
             Caption:
-                text: ref_start + 'BilinearGradient.render_texture() method' \
-                                                                    + ref_end
-                on_ref_press: open_link(bilinear_gradient_render_texture_link)
+                ref: 'bilinear_gradient_render_texture'
+                label: 'BilinearGradient.render_texture() method'
 '''
 
 
