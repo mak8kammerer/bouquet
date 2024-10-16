@@ -13,7 +13,8 @@ Welcome to bouquet's documentation!
 .. toctree::
    :maxdepth: 1
 
-   gradients   
+   gradients
+   examples   
 
 Indices and tables
 ==================
