@@ -311,6 +311,24 @@ class GradientsTests(GraphicUnitTest):
         ]
         render(wid)
 
+        wid.gradient_center_x = 0.35
+        render(wid)
+
+        wid.gradient_center_y = 0.14
+        render(wid)
+
+        wid.gradient_center_position = (0.0, 0.0)
+        render(wid)
+
+        wid.radius = 2.5
+        render(wid)
+
+        wid.radius = 0.0
+        render(wid)
+
+        wid.radius = -1.0
+        render(wid)
+
     @is_github_actions
     def test_radial_gradient_texture(self):
         from bouquet.gradients import ColorStop, RadialGradient
@@ -340,6 +358,17 @@ class GradientsTests(GraphicUnitTest):
         texture = RadialGradient.render_texture(
             color_stops=[
                 ColorStop(position=0.0, color='red'),
+                ColorStop(position=1.0, color='white')
+            ],
+            size=(512, 256), radius=0.0
+        )
+        self.assertEqual(texture.size, (512, 256))
+        self.assertEqual(len(texture.pixels), 4 * 512 * 256)
+        self.assertEqual(texture.pixels, b'\xff\xff\xff\xff' * 512 * 256)
+
+        texture = RadialGradient.render_texture(
+            color_stops=[
+                ColorStop(position=0.0, color='red'),
                 ColorStop(position=0.5, color='yellow'),
                 ColorStop(position=1.0, color='white')
             ],
@@ -357,6 +386,58 @@ class GradientsTests(GraphicUnitTest):
         self.assertEqual(texture.pixels[1499 * 4:1500 * 4], b'\xff\xff\x00\xff')
         # 0.0 -> white -> (255, 255, 255, 255)
         self.assertEqual(texture.pixels[-4:], b'\xff\xff\xff\xff')
+
+        texture = RadialGradient.render_texture(
+            color_stops=[
+                ColorStop(position=0.0, color=[1.0, 0.0, 0.0]),
+                ColorStop(position=0.5, color=[0.0, 1.0, 0.0]),
+                ColorStop(position=1.0, color=[0.0, 0.0, 1.0])
+            ],
+            height=1, width=2000, gradient_center_x=0.0
+        )
+        self.assertEqual(texture.size, (2000, 1))
+        self.assertEqual(len(texture.pixels), 4 * 2000 * 1)
+        # 0.0 -> red -> (255, 0, 0, 255)
+        self.assertEqual(texture.pixels[:4], b'\xff\x00\x00\xff')
+        # 0.25 -> green -> (0, 255, 0, 255)
+        self.assertEqual(texture.pixels[499 * 4:500 * 4], b'\x00\xff\x00\xff')
+        # 0.5 - 1.0 -> blue -> (0, 0, 255, 255)
+        self.assertEqual(texture.pixels[4 * 1000:], b'\x00\x00\xff\xff' * 1000)
+
+        texture = RadialGradient.render_texture(
+            color_stops=[
+                ColorStop(position=0.0, color=[1.0, 0.0, 0.0]),
+                ColorStop(position=0.5, color=[0.0, 1.0, 0.0]),
+                ColorStop(position=1.0, color=[0.0, 0.0, 1.0])
+            ],
+            size=(1, 2000), gradient_center_y=0.0
+        )
+        self.assertEqual(texture.size, (1, 2000))
+        self.assertEqual(len(texture.pixels), 4 * 1 * 2000)
+        # 1.0 - 0.5 -> blue -> (0, 0, 255, 255)
+        self.assertEqual(texture.pixels[:4 * 1000], b'\x00\x00\xff\xff' * 1000)
+        # 0.25 -> green -> (0, 255, 0, 255)
+        self.assertEqual(texture.pixels[1499 * 4:1500 * 4], b'\x00\xff\x00\xff')
+        # 0.0 -> red -> (255, 0, 0, 255)
+        self.assertEqual(texture.pixels[-4:], b'\xff\x00\x00\xff')
+
+        texture = RadialGradient.render_texture(
+            color_stops=[
+                ColorStop(position=0.0, color=[1.0, 0.0, 0.0]),
+                ColorStop(position=0.5, color=[0.0, 1.0, 0.0]),
+                ColorStop(position=1.0, color=[0.0, 0.0, 1.0])
+            ],
+            size=(2000, 1), radius=2.0,
+            gradient_center_position=(0.0, 0.5)
+        )
+        self.assertEqual(texture.size, (2000, 1))
+        self.assertEqual(len(texture.pixels), 4 * 2000 * 1)
+        # 0.0 -> red -> (255, 0, 0, 255)
+        self.assertEqual(texture.pixels[:4], b'\xff\x00\x00\xff')
+        # 0.5 -> green -> (0, 255, 0, 255)
+        self.assertEqual(texture.pixels[999 * 4:1000 * 4], b'\x00\xff\x00\xff')
+        # 1.0 -> blue -> (0, 0, 255, 255)
+        self.assertEqual(texture.pixels[-4:], b'\x00\x00\xff\xff')
 
         # alpha blending test
         texture = RadialGradient.render_texture(

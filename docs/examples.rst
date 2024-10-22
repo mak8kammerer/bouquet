@@ -95,7 +95,6 @@ Gradients examples
     KV = '''
     #: import ColorStop bouquet.gradients.ColorStop
     RadialGradient:
-        angle: 45
         color_stops: [ \
             ColorStop(position=0.0, color='pink'), \
             ColorStop(position=1.0, color='purple'), \
