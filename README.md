@@ -14,7 +14,7 @@ build modern and beautiful UI for your applications. Enjoy the experience!
 - [x] Linear Gradient
 - [x] Bilinear Gradient
 - [x] Radial Gradient
-- [ ] Conical Gradient
+- [x] Conical Gradient
 - [ ] Mesh Gradient
 - [ ] Blurs and noises
 - [ ] Animations (including 3D)
