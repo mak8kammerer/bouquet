@@ -78,7 +78,7 @@ Gradients examples
     class MyApp(App):
 
         def build(self):
-            return EllipseWithRadialGradient()
+            return EllipseWithLinearGradient()
 
     if __name__ == '__main__':
         MyApp().run()
@@ -190,6 +190,75 @@ Gradients examples
 
         def build(self):
             return Builder.load_string(KV)
+
+    if __name__ == '__main__':
+        MyApp().run()
+
+:class:`bouquet.gradients.ConicalGradient` example (Python with KVlang):
+
+.. code-block:: python
+
+    from kivy.app import App
+    from kivy.lang import Builder
+
+    import bouquet.gradients
+
+    KV = '''
+    #: import ColorStop bouquet.gradients.ColorStop
+    ConicalGradient:
+        color_stops: [ \
+            ColorStop(position=0.0, color='#e66465'), \
+            ColorStop(position=1.0, color='#9198e5'), \
+        ]
+    '''
+
+    class MyApp(App):
+
+        def build(self):
+            return Builder.load_string(KV)
+
+    if __name__ == '__main__':
+        MyApp().run()
+
+:func:`bouquet.gradients.ConicalGradient.render_texture` example (pure Python):
+
+.. code-block:: python
+
+    from kivy.app import App
+    from kivy.graphics import Ellipse
+    from kivy.uix.widget import Widget
+
+    from bouquet.gradients import ColorStop, ConicalGradient
+
+    class EllipseWithRadialGradient(Widget):
+
+        def __init__(self, **kwargs):
+            super().__init__(**kwargs)
+            self.color_stops = [
+                ColorStop(position=0.0, color='#e66465'),
+                ColorStop(position=1.0, color='#9198e5')
+            ]
+            with self.canvas:
+                self.ellipse = Ellipse(
+                    pos=self.pos,
+                    size=self.size,
+                    texture=ConicalGradient.render_texture(
+                        size=self.size,
+                        color_stops=self.color_stops,
+                    )
+                )
+
+        def on_size(self, widget, size):
+            self.ellipse.size = size
+            self.ellipse.texture = ConicalGradient.render_texture(
+                size=self.size,
+                color_stops=self.color_stops,
+            )
+
+    class MyApp(App):
+
+        def build(self):
+            return EllipseWithConicalGradient()
 
     if __name__ == '__main__':
         MyApp().run()

@@ -21,7 +21,11 @@ LINKS = {
     'bilinear_gradient':
         DOCS_LINK + '#bouquet.gradients.BilinearGradient',
     'bilinear_gradient_render_texture':
-        DOCS_LINK + '#bouquet.gradients.BilinearGradient.render_texture'
+        DOCS_LINK + '#bouquet.gradients.BilinearGradient.render_texture',
+    'conical_gradient':
+        DOCS_LINK + '#bouquet.gradients.ConicalGradient',
+    'conical_gradient_render_texture':
+        DOCS_LINK + '#bouquet.gradients.ConicalGradient.render_texture'
 }
 
 
@@ -41,6 +45,7 @@ KV = '''
 #: import linear_gradient bouquet.gradients.LinearGradient
 #: import radial_gradient bouquet.gradients.RadialGradient
 #: import bilinear_gradient bouquet.gradients.BilinearGradient
+#: import conical_gradient bouquet.gradients.ConicalGradient
 
 <Caption>:
     size_hint_y: None
@@ -144,6 +149,35 @@ BoxLayout:
             Caption:
                 ref: 'bilinear_gradient_render_texture'
                 label: 'BilinearGradient.render_texture() method'
+            ConicalGradient:
+                size_hint_y: None
+                height: window.height / 2
+                color_stops: [ \
+                    ColorStop(position=0.0, color='cyan'), \
+                    ColorStop(position=0.3, color='magenta'), \
+                    ColorStop(position=0.6, color='yellow'), \
+                    ColorStop(position=1.0, color='cyan')  \
+                ]
+            Widget:
+                canvas:
+                    Ellipse:
+                        pos: self.pos
+                        size: self.size
+                        texture: conical_gradient.render_texture( \
+                            size=self.size, \
+                            color_stops=[ \
+                                ColorStop(position=0.0, color='cyan'), \
+                                ColorStop(position=0.3, color='magenta'), \
+                                ColorStop(position=0.6, color='yellow'), \
+                                ColorStop(position=1.0, color='cyan')  \
+                            ] \
+                        )
+            Caption:
+                ref: 'conical_gradient'
+                label: 'ConicalGradient widget'
+            Caption:
+                ref: 'conical_gradient_render_texture'
+                label: 'ConicalGradient.render_texture() method'
 '''
 
 
