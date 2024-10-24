@@ -1,5 +1,3 @@
-# TODO: Update docs; write about importing ColorStop in kv files.
-
 '''
 ``bouquet.gradients`` module provides various types of gradients.
 
@@ -15,5 +13,9 @@ from .base import ColorStop
 from .linear import LinearGradient
 from .bilinear import BilinearGradient
 from .radial import RadialGradient
+from .conical import ConicalGradient
 
-__all__ = ('ColorStop', 'LinearGradient', 'BilinearGradient', 'RadialGradient')
+__all__ = (
+    'ColorStop', 'LinearGradient', 'BilinearGradient', 
+    'RadialGradient', 'ConicalGradient'
+)
