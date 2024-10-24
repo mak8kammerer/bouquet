@@ -464,3 +464,43 @@ class GradientsTests(GraphicUnitTest):
         self.assertEqual(texture.pixels[4 * 1749:4 * 1750], b'\xff\x00\x00\x00')
         # 0.0 -> transparent red -> (255, 0, 0, 0)
         self.assertEqual(texture.pixels[-4:], b'\xff\x00\x00\x00')
+
+    def test_conical_gradient_widget(self):
+        from bouquet.gradients import ColorStop, ConicalGradient
+
+        render = self.render
+
+        wid = ConicalGradient()
+        render(wid)
+
+        wid.color_stops = [ColorStop(color='cyan')]
+        render(wid)
+
+        wid.color_stops.append(ColorStop(color='#ffffff', position=0.2))
+        render(wid)
+
+    def test_conical_gradient_widget(self):
+        from bouquet.gradients import ColorStop, ConicalGradient
+        
+        texture = ConicalGradient.render_texture()
+        self.assertEqual(texture.size, (100, 100))
+
+        texture = ConicalGradient.render_texture(width=128)
+        self.assertEqual(texture.size, (128, 100))
+
+        texture = ConicalGradient.render_texture(height=256)
+        self.assertEqual(texture.size, (100, 256))
+
+        texture = ConicalGradient.render_texture()
+        self.assertEqual(texture.size, (100, 100))
+        self.assertEqual(len(texture.pixels), 4 * 100 * 100)
+        self.assertEqual(texture.pixels, b'\xff\xff\xff\xff' * 100 * 100)
+
+        texture = ConicalGradient.render_texture(
+            color_stops=[
+                ColorStop(color=(1.0, 1.0, 0.0, 0.0))
+            ], size=(50, 50)
+        )
+        self.assertEqual(texture.size, (50, 50))
+        self.assertEqual(len(texture.pixels), 4 * 50 * 50)
+        self.assertEqual(texture.pixels, b'\xff\xff\x00\x00' * 50 * 50)
