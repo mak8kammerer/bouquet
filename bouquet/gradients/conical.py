@@ -62,6 +62,11 @@ void main() {
 
 class ConicalGradient(GradientBase):
     '''
+    The ConicalGradient class provides a way to create conical gradients in
+    Kivy.
+
+    A conical gradient is a type of gradient in which colors smoothly blend
+    around a central point, creating a cone-like appearance.
     '''
 
     gradient_center_x = NumericProperty(defaultvalue=0.5)
