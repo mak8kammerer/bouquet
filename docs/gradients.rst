@@ -22,3 +22,7 @@ Gradients
 .. autoclass:: bouquet.gradients.BilinearGradient
    :members: 
    :show-inheritance:
+
+.. autoclass:: bouquet.gradients.ConicalGradient
+   :members: 
+   :show-inheritance:
