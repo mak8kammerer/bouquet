@@ -488,6 +488,7 @@ class GradientsTests(GraphicUnitTest):
         wid.gradient_center_pos = (0.5, 0.5)
         render(wid)
 
+    @is_github_actions
     def test_conical_gradient_texture(self):
         from bouquet.gradients import ColorStop, ConicalGradient
 
