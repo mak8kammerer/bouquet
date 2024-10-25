@@ -25,22 +25,15 @@ from .base import GradientBase
 
 KV = '''
 <LinearGradient>:
-    _y_uv: self.height / self.width
     canvas:
         Color:
             rgba: 1.0, 1.0, 1.0, 1.0
         BindTexture:
             index: 1
             texture: self._1d_gradient_texture
-        Mesh:
-            vertices: [ \
-                self.x + self.width, self.y,                1.0,  self._y_uv, \
-                self.x,              self.y,               -1.0,  self._y_uv, \
-                self.x + self.width, self.y + self.height,  1.0, -self._y_uv, \
-                self.x,              self.y + self.height, -1.0, -self._y_uv, \
-            ]
-            indices: [0, 1, 2, 3]
-            mode: 'triangle_strip'
+        Rectangle:
+            pos: self.pos
+            size: self.size
 '''
 
 
@@ -51,8 +44,8 @@ uniform mat4 gradientMatrix;
 
 void main() {
     frag_color = color * vec4(1.0, 1.0, 1.0, opacity);
-    vec2 tex_coord = (gradientMatrix * vec4(vTexCoords0, 0.0, 1.0)).xy;
-    tex_coord0 = (tex_coord + 1.0) * 0.5;
+    vec4 tex_coord = (gradientMatrix * vec4(vTexCoords0 * 2.0 - 1.0, 0.0, 1.0));
+    tex_coord0 = (tex_coord.xy + 1.0) * 0.5;
     gl_Position = projection_mat * modelview_mat * vec4(vPosition, 0.0, 1.0);
 }
 '''
@@ -83,8 +76,6 @@ class LinearGradient(GradientBase):
         <https://www.w3.org/TR/css-images-3/#linear-gradients>`_.
     '''
 
-    _y_uv = NumericProperty()
-
     angle = NumericProperty()
     '''
     Defines the rotation of the gradient line in degrees. The angle determines
@@ -113,9 +104,7 @@ class LinearGradient(GradientBase):
             Callback(
                 lambda arg: glBlendFunc(GL_ONE, GL_ZERO)
             )
-            # _y_uv is not calculated automatically
             LinearGradient(
-                _y_uv=(height / width),
                 size=(width, height),
                 **kwargs
             ).canvas
@@ -144,12 +133,13 @@ class LinearGradient(GradientBase):
         angle = radians(self.angle)
         rotation = angle - radians(90)
 
-        length = abs(self.width * sin(angle)) + abs(self.height * cos(angle))
-        scale = self.width / length
+        width, height = self.size
+        length = abs(width * sin(angle)) + abs(height * cos(angle))
 
         matrix = Matrix()
+        matrix = matrix.multiply(Matrix().scale(1.0, height / width, 1.0))
         matrix = matrix.multiply(Matrix().rotate(rotation, 0.0, 0.0, 1.0))
-        matrix = matrix.multiply(Matrix().scale(scale, 1.0, 1.0))
+        matrix = matrix.multiply(Matrix().scale(width / length, 1.0, 1.0))
         self.canvas['gradientMatrix'] = matrix.transpose()
 
 
