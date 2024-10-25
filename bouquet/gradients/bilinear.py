@@ -1,7 +1,6 @@
 '''
 Base module for bilinear gradient.
 '''
-# TODO: implement alternative color spaces
 
 __all__ = ('BilinearGradient', )
 

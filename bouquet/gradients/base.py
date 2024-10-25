@@ -1,6 +1,7 @@
 '''
 Base module for gradients with color stops.
 '''
+# TODO: implement alternative color spaces
 
 __all__ = (
     'ColorStop', 'GradientBase',
