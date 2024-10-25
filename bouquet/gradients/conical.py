@@ -54,7 +54,7 @@ $HEADER$
 uniform sampler2D gradientTexture;
 
 void main() {
-    float result = atan(-tex_coord0.y, -tex_coord0.x) * 0.15915494309188485 + 0.5;
+    float result = atan(-tex_coord0.y, -tex_coord0.x) * 0.159154943091884 + 0.5;
     gl_FragColor = texture(gradientTexture, vec2(result, 0.5));
 }
 '''
@@ -118,7 +118,7 @@ class ConicalGradient(GradientBase):
             )
         fbo.draw()
         return fbo.texture
-    
+
     def __init__(self, **kwargs):
         self.canvas = RenderContext(
             vs=VERTEX_SHADER,
@@ -131,7 +131,7 @@ class ConicalGradient(GradientBase):
         self.fbind('size',                self._update_gradient_matrix)
         self.fbind('gradient_center_pos', self._update_gradient_matrix)
         super(ConicalGradient, self).__init__(**kwargs)
-    
+
     def _update_gradient_matrix(self, _, __):
         scale = self.width / self.height
         x = self.gradient_center_x * 2.0 - 1.0

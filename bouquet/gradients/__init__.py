@@ -16,6 +16,6 @@ from .radial import RadialGradient
 from .conical import ConicalGradient
 
 __all__ = (
-    'ColorStop', 'LinearGradient', 'BilinearGradient', 
+    'ColorStop', 'LinearGradient', 'BilinearGradient',
     'RadialGradient', 'ConicalGradient'
 )
