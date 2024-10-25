@@ -13,6 +13,10 @@ from kivy.graphics.opengl import glBlendFunc, glBlendFuncSeparate, \
                                     GL_SRC_ALPHA, GL_ONE
 from kivy.graphics.texture import Texture
 from kivy.graphics.transformation import Matrix
+from kivy.properties import NumericProperty, ReferenceListProperty
+
+# Make sure that OpenGL context is created
+import kivy.core.window
 
 from .base import GradientBase
 
@@ -59,7 +63,36 @@ void main() {
 class ConicalGradient(GradientBase):
     '''
     '''
-    
+
+    gradient_center_x = NumericProperty(defaultvalue=0.5)
+    '''
+    X-coordinate of the gradient's center, where 0.0 corresponds
+    to the left edge of the widget and 1.0 to the right edge.
+
+    :attr:`gradient_center_x` is an :class:`~kivy.properties.NumericProperty`
+    and defaults to `0.5`.
+    '''
+
+    gradient_center_y = NumericProperty(defaultvalue=0.5)
+    '''
+    Y-coordinate of the gradient's center, where 0.0 corresponds
+    to the top edge of the widget and 1.0 to the bottom edge.
+
+    :attr:`gradient_center_y` is an :class:`~kivy.properties.NumericProperty`
+    and defaults to `0.5`.
+    '''
+
+    gradient_center_pos = ReferenceListProperty(
+        gradient_center_x, gradient_center_y
+    )
+    '''
+    Position of the gradient center.
+
+    :attr:`gradient_center_pos` is a
+    :class:`~kivy.properties.ReferenceListProperty` of
+    (:attr:`gradient_center_x`, :attr:`gradient_center_y`) properties.
+    '''
+
     @staticmethod
     def render_texture(**kwargs) -> Texture:
         '''
@@ -95,11 +128,20 @@ class ConicalGradient(GradientBase):
             use_parent_frag_modelview=True
         )
         self.canvas['gradientTexture'] = 1
-        self.fbind('size', self._update_gradient_matrix)
+        self.fbind('size',                self._update_gradient_matrix)
+        self.fbind('gradient_center_pos', self._update_gradient_matrix)
         super(ConicalGradient, self).__init__(**kwargs)
     
     def _update_gradient_matrix(self, _, __):
-        matrix = Matrix().scale(self.width / self.height, 1.0, 1.0)
+        scale = self.width / self.height
+        x = self.gradient_center_x * 2.0 - 1.0
+        y = self.gradient_center_y * 2.0 - 1.0
+        x *= scale
+
+        matrix = Matrix()
+        matrix = matrix.multiply(Matrix().translate(-x, -y, 0.0))
+        matrix = matrix.multiply(Matrix().scale(scale, 1.0, 1.0))
+
         self.canvas['gradientMatrix'] = matrix
 
 
