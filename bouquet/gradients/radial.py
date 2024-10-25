@@ -8,16 +8,13 @@ from kivy.lang import Builder
 from kivy.factory import Factory
 from kivy.graphics import Callback, RenderContext
 from kivy.graphics.fbo import Fbo
-from kivy.graphics.opengl import glBlendFunc, glBlendFuncSeparate, \
-                                    GL_ZERO, GL_ONE_MINUS_SRC_ALPHA, \
-                                    GL_SRC_ALPHA, GL_ONE
 from kivy.graphics.texture import Texture
 from kivy.properties import NumericProperty, ReferenceListProperty
 
 # Make sure that OpenGL context is created
 import kivy.core.window
 
-from .base import GradientBase
+from .base import GradientBase, enable_copy_blending, disable_copy_blending
 
 
 KV = '''
@@ -115,15 +112,9 @@ class RadialGradient(GradientBase):
 
         fbo = Fbo(size=(width, height))
         with fbo:
-            Callback(
-                lambda arg: glBlendFunc(GL_ONE, GL_ZERO)
-            )
+            Callback(enable_copy_blending)
             RadialGradient(size=(width, height), **kwargs).canvas
-            Callback(
-                lambda arg: glBlendFuncSeparate(
-                    GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE
-                )
-            )
+            Callback(disable_copy_blending)
         fbo.draw()
         return fbo.texture
 
