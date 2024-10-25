@@ -81,13 +81,13 @@ class RadialGradient(GradientBase):
     and defaults to `0.5`.
     '''
 
-    gradient_center_position = ReferenceListProperty(
+    gradient_center_pos = ReferenceListProperty(
         gradient_center_x, gradient_center_y
     )
     '''
     Position of the gradient center.
 
-    :attr:`gradient_center_position` is a
+    :attr:`gradient_center_pos` is a
     :class:`~kivy.properties.ReferenceListProperty` of
     (:attr:`gradient_center_x`, :attr:`gradient_center_y`) properties.
     '''
@@ -142,7 +142,7 @@ class RadialGradient(GradientBase):
 
         fbind = self.fbind
         fbind('radius',                   self._update_gradient_radius)
-        fbind('gradient_center_position', self._update_gradient_center)
+        fbind('gradient_center_pos', self._update_gradient_center)
         super(RadialGradient, self).__init__(**kwargs)
 
     def _update_gradient_center(self, _, value):

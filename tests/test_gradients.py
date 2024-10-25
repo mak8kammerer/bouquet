@@ -317,7 +317,7 @@ class GradientsTests(GraphicUnitTest):
         wid.gradient_center_y = 0.14
         render(wid)
 
-        wid.gradient_center_position = (0.0, 0.0)
+        wid.gradient_center_pos = (0.0, 0.0)
         render(wid)
 
         wid.radius = 2.5
@@ -428,7 +428,7 @@ class GradientsTests(GraphicUnitTest):
                 ColorStop(position=1.0, color=[0.0, 0.0, 1.0])
             ],
             size=(2000, 1), radius=2.0,
-            gradient_center_position=(0.0, 0.5)
+            gradient_center_pos=(0.0, 0.5)
         )
         self.assertEqual(texture.size, (2000, 1))
         self.assertEqual(len(texture.pixels), 4 * 2000 * 1)
