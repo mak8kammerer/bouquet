@@ -141,7 +141,7 @@ class RadialGradient(GradientBase):
         canvas['gradientCenter'] = (0.5, 0.5)
 
         fbind = self.fbind
-        fbind('radius',                   self._update_gradient_radius)
+        fbind('radius',              self._update_gradient_radius)
         fbind('gradient_center_pos', self._update_gradient_center)
         super(RadialGradient, self).__init__(**kwargs)
 
