@@ -45,7 +45,7 @@ void main() {
     float distance = distance(tex_coord0, gradientCenter) * gradientRadius;
     // workaround: when the radius equals 0.0, add 1.0 to the distance (0.0)
     distance += step(gradientRadius, 0.0);
-    gl_FragColor = texture2D(gradientTexture, vec2(distance, 0.5));
+    gl_FragColor = frag_color * texture2D(gradientTexture, vec2(distance, 0.5));
 }
 '''
 

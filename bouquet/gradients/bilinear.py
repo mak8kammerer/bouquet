@@ -42,7 +42,7 @@ uniform vec4 bottomRightColor;
 void main() {
     vec4 topColor = mix(topLeftColor, topRightColor, tex_coord0.x);
     vec4 bottomColor = mix(bottomLeftColor, bottomRightColor, tex_coord0.x);
-    gl_FragColor = mix(topColor, bottomColor, tex_coord0.y);
+    gl_FragColor = frag_color * mix(topColor, bottomColor, tex_coord0.y);
 }
 '''
 

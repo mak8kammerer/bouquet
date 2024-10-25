@@ -55,7 +55,7 @@ uniform sampler2D gradientTexture;
 
 void main() {
     float result = atan(-tex_coord0.y, -tex_coord0.x) * 0.159154943091884 + 0.5;
-    gl_FragColor = texture(gradientTexture, vec2(result, 0.5));
+    gl_FragColor = frag_color * texture(gradientTexture, vec2(result, 0.5));
 }
 '''
 
