@@ -1,6 +1,9 @@
 '''
 ``bouquet.gradients`` module provides various types of gradients.
 
+.. note::
+    ``bouquet.gradients`` API is stable and won't change dramatically.
+
 How to use gradients with Vertex Instructions?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
